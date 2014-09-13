@@ -1,5 +1,6 @@
 package freakrware.lt.app.core.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -12,6 +13,7 @@ public class Coordinates {
 	private Context context;
 	private Location location;
 	
+	@SuppressLint("NewApi")
 	public Coordinates(Context context){
 		this.context = context;
 		// Get the location manager
@@ -19,7 +21,8 @@ public class Coordinates {
 	    // Define the criteria how to select the location provider -> use
 	    // default
 	    Criteria criteria = new Criteria();
-	    provider = locationManager.getBestProvider(criteria, false);
+	    criteria.setAccuracy(Criteria.ACCURACY_FINE);;
+	    provider = locationManager.getBestProvider(criteria, true);
 	    location = locationManager.getLastKnownLocation(provider);
 	}
 	public Location get_location(){

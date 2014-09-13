@@ -1,5 +1,6 @@
 package freakrware.lt.app.core.receiver;
 
+import freakrware.lt.app.core.util.CheckCoords;
 import freakrware.lt.app.core.util.Coordinates;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,10 +11,8 @@ public class CheckCoordinatesReceiver extends BroadcastReceiver{
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Coordinates coord = new Coordinates(context);
-		Location loc = coord.get_location();
-		
-		
+		//new CheckCoords(context);
+				
 	}
 
 }
