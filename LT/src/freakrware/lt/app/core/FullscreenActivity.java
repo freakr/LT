@@ -1,17 +1,15 @@
 package freakrware.lt.app.core;
 
-import freakrware.lt.app.core.util.CheckCoords;
-import freakrware.lt.app.core.util.Coordinates;
-import freakrware.lt.app.core.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import freakrware.lt.app.core.util.Coordinates;
+import freakrware.lt.app.core.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -47,22 +45,30 @@ public class FullscreenActivity extends Activity {
 	 * The instance of the {@link SystemUiHider} for this activity.
 	 */
 	private SystemUiHider mSystemUiHider;
-	private Location actualloc;
+	private Coordinates ccoords;
+	private ActualCoords acoord;
+	private TextView vlongitude ;//= (TextView) this.findViewById(R.id.TVLongitudevalue);
+	private TextView vlatitude ;//= (TextView) this.findViewById(R.id.TVLatitudevalue);
+	private TextView vaccuracy ;//= (TextView) this.findViewById(R.id.TVAccuracyvalue);
+	private TextView vprovider ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
+	Activity mActivity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_fullscreen);
-		actualloc = new CheckCoords(getBaseContext()).loc;
-		TextView vlongitude = (TextView) findViewById(R.id.TVLongitudevalue);
-		TextView vlatitude = (TextView) findViewById(R.id.TVLatitudevalue);
-		TextView vaccuracy = (TextView) findViewById(R.id.TVAccuracyvalue);
-		TextView vprovider = (TextView) findViewById(R.id.TVProvidervalue);
-		vlongitude.setText(String.valueOf(actualloc.getLongitude()));
-		vlatitude.setText(String.valueOf(actualloc.getLatitude()));
-		vaccuracy.setText(String.valueOf(actualloc.getAccuracy())+" m");
-		vprovider.setText(String.valueOf(actualloc.getProvider()));
+		mActivity=this;
+		
+		ccoords = new Coordinates(getBaseContext());
+		
+		vlongitude = (TextView) this.findViewById(R.id.TVLongitudevalue);
+		vlatitude = (TextView) this.findViewById(R.id.TVLatitudevalue);
+		vaccuracy = (TextView) this.findViewById(R.id.TVAccuracyvalue);
+		vprovider = (TextView) this.findViewById(R.id.TVProvidervalue);
+		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vprovider,ccoords,mActivity);
+		new Thread(acoord).start();
+		//acoord.start(); //set_actual_coords();
 		
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
@@ -162,7 +168,6 @@ public class FullscreenActivity extends Activity {
 			mSystemUiHider.hide();
 		}
 	};
-
 	/**
 	 * Schedules a call to hide() in [delay] milliseconds, canceling any
 	 * previously scheduled calls.
