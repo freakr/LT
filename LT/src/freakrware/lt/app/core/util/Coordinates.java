@@ -14,14 +14,32 @@ public class Coordinates {
 	private LocationManager locationManager;
 	private Context context;
 	private Location loc;
-	public LocationListener lListener= new LocationListener() {
+	private Location gpsloc;
+	private Location networkloc;
+	
+	boolean gpsstatus ;
+	public LocationListener gpsListener= new LocationListener() {
         public void onLocationChanged(Location location) {
             // Each time the location is changed we assign loc
-            loc = location;
+            gpsloc = location;
         }
 
          // Need these even if they do nothing. Can't remember why.
-         public void onProviderDisabled(String arg0) {}
+         public void onProviderDisabled(String provider) {}
+         public void onProviderEnabled(String provider) {}
+         @Override
+         public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+		
+    };
+    public LocationListener networkListener= new LocationListener() {
+        public void onLocationChanged(Location location) {
+            // Each time the location is changed we assign loc
+            networkloc = location;
+        }
+
+         // Need these even if they do nothing. Can't remember why.
+         public void onProviderDisabled(String provider) {}
          public void onProviderEnabled(String provider) {}
          @Override
          public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -33,30 +51,27 @@ public class Coordinates {
 	public Coordinates(Context context){
 		this.context = context;
 		
-		// Get the location manager
-	    locationManager = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
-	    // Define the criteria how to select the location provider -> use
-	    // default
-	    //Criteria criteria = new Criteria();
-	    //criteria.setAccuracy(Criteria.ACCURACY_FINE);
-	    boolean gpsstatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-	    if(gpsstatus){
-	    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 35000, 10, lListener);
-	    }else{
-	    	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 35000, 10, lListener);
-	    	//provider = locationManager.getBestProvider(criteria, true);
-	    	//loc = locationManager.getLastKnownLocation(provider);
-	    }
+		locationManager = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
+	    gpsstatus = check_gps_status();
 	    
-	    
+	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, gpsListener);
+	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, networkListener);
 	    
 	}
+	private boolean check_gps_status(){
+		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		
+	}
 	public Location get_location(){
-		if(loc != null){
-	    	
+		if(check_gps_status()){
+			loc = gpsloc;
 	    }else{
-	    	loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	    	loc = networkloc;
 	    }
+		if(loc != null){}
+		else{
+			loc = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+		}
 		return loc;
 		
 	}
