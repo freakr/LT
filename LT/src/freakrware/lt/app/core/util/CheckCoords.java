@@ -6,6 +6,7 @@ import android.location.Location;
 public class CheckCoords {
 	
 	private Context context;
+	public Location loc;
 	
 	public CheckCoords(Context context){
 		this.context = context;
@@ -13,7 +14,7 @@ public class CheckCoords {
 	}
 	public void check(){
 	Coordinates coord = new Coordinates(context);
-	Location loc = coord.get_location();
+	loc = coord.get_location();
 	float distance = loc.distanceTo(loc);
 	}
 	

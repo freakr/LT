@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -46,14 +47,23 @@ public class FullscreenActivity extends Activity {
 	 * The instance of the {@link SystemUiHider} for this activity.
 	 */
 	private SystemUiHider mSystemUiHider;
+	private Location actualloc;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_fullscreen);
-		new CheckCoords(getBaseContext());
-
+		actualloc = new CheckCoords(getBaseContext()).loc;
+		TextView vlongitude = (TextView) findViewById(R.id.TVLongitudevalue);
+		TextView vlatitude = (TextView) findViewById(R.id.TVLatitudevalue);
+		TextView vaccuracy = (TextView) findViewById(R.id.TVAccuracyvalue);
+		TextView vprovider = (TextView) findViewById(R.id.TVProvidervalue);
+		vlongitude.setText(String.valueOf(actualloc.getLongitude()));
+		vlatitude.setText(String.valueOf(actualloc.getLatitude()));
+		vaccuracy.setText(String.valueOf(actualloc.getAccuracy())+" m");
+		vprovider.setText(String.valueOf(actualloc.getProvider()));
+		
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
 
@@ -117,8 +127,7 @@ public class FullscreenActivity extends Activity {
 		// Upon interacting with UI controls, delay any scheduled hide()
 		// operations to prevent the jarring behavior of controls going away
 		// while interacting with the UI.
-		findViewById(R.id.dummy_button).setOnTouchListener(
-				mDelayHideTouchListener);
+		
 	}
 
 	@Override
