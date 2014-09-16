@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/black_overlay"
     tools:context="freakrware.lt.app.core.FullscreenActivity" >
 
     <!--
@@ -69,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="0.1"
+                    android:background="@color/black_overlay"
                     android:gravity="center|left"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -151,13 +152,26 @@
                     android:textAppearance="?android:attr/textAppearanceLarge" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/TVDummy1"
+            <Button
+                android:id="@+id/bSavePosition"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_margin="10dp"
+                android:layout_weight="0.1"
+                android:text="Save Position"
+                android:textStyle="bold"
+                android:typeface="serif" />
+
+            <Button
+                android:id="@+id/bShowPosition"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="0.1"
+                android:text="Show Position"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse"
+                android:textStyle="bold"
+                android:typeface="serif" />
 
         </LinearLayout>
 

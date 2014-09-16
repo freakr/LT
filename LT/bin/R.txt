@@ -238,7 +238,6 @@ int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_launcher 0x7f020057
 int id TVAccuracy 0x7f050042
 int id TVAccuracyvalue 0x7f050043
-int id TVDummy1 0x7f050046
 int id TVLatitude 0x7f050040
 int id TVLatitudevalue 0x7f050041
 int id TVLongitude 0x7f05003e
@@ -258,6 +257,8 @@ int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
+int id bSavePosition 0x7f050046
+int id bShowPosition 0x7f050047
 int id beginning 0x7f050011
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d

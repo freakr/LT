@@ -1,13 +1,21 @@
 package freakrware.lt.app.core;
 
+import java.util.Locale;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import freakrware.lt.app.core.util.Coordinates;
 import freakrware.lt.app.core.util.SystemUiHider;
 
@@ -53,6 +61,9 @@ public class FullscreenActivity extends Activity {
 	private TextView vprovider ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
 	Activity mActivity;
 
+	private Button bsavepostion;
+	private Button bshowposition;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,11 +72,40 @@ public class FullscreenActivity extends Activity {
 		mActivity=this;
 		
 		ccoords = new Coordinates(getBaseContext());
-		
-		vlongitude = (TextView) this.findViewById(R.id.TVLongitudevalue);
-		vlatitude = (TextView) this.findViewById(R.id.TVLatitudevalue);
-		vaccuracy = (TextView) this.findViewById(R.id.TVAccuracyvalue);
-		vprovider = (TextView) this.findViewById(R.id.TVProvidervalue);
+		bsavepostion = (Button) findViewById(R.id.bSavePosition);
+		bshowposition = (Button) findViewById(R.id.bShowPosition);
+		bshowposition.setOnTouchListener(new OnTouchListener(){
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				String lati = String.valueOf(vlatitude.getText());
+				String longi = String.valueOf(vlongitude.getText());
+				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d (%s)", lati, longi,100,"You are Here");
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+				try
+		        {
+		            startActivity(intent);
+		        }
+		        catch(ActivityNotFoundException ex)
+		        {
+		            try
+		            {
+		                Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+		                startActivity(unrestrictedIntent);
+		            }
+		            catch(ActivityNotFoundException innerEx)
+		            {
+		                Toast.makeText(mActivity, "Please install a maps application", Toast.LENGTH_LONG).show();
+		            }
+		        }
+				return false;
+			}
+			
+		});
+		vlongitude = (TextView) findViewById(R.id.TVLongitudevalue);
+		vlatitude = (TextView) findViewById(R.id.TVLatitudevalue);
+		vaccuracy = (TextView) findViewById(R.id.TVAccuracyvalue);
+		vprovider = (TextView) findViewById(R.id.TVProvidervalue);
 		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vprovider,ccoords,mActivity);
 		new Thread(acoord).start();
 		//acoord.start(); //set_actual_coords();
