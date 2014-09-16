@@ -4,19 +4,25 @@ import java.util.Locale;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import freakrware.lt.app.core.util.Coordinates;
+import freakrware.lt.app.core.util.DataBase;
 import freakrware.lt.app.core.util.SystemUiHider;
 
 /**
@@ -55,13 +61,14 @@ public class FullscreenActivity extends Activity {
 	private SystemUiHider mSystemUiHider;
 	private Coordinates ccoords;
 	private ActualCoords acoord;
+	private DataBase db = new DataBase();
 	private TextView vlongitude ;//= (TextView) this.findViewById(R.id.TVLongitudevalue);
 	private TextView vlatitude ;//= (TextView) this.findViewById(R.id.TVLatitudevalue);
 	private TextView vaccuracy ;//= (TextView) this.findViewById(R.id.TVAccuracyvalue);
 	private TextView vprovider ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
 	Activity mActivity;
 
-	private Button bsavepostion;
+	private Button bsaveposition;
 	private Button bshowposition;
 
 	@Override
@@ -70,9 +77,41 @@ public class FullscreenActivity extends Activity {
 
 		setContentView(R.layout.activity_fullscreen);
 		mActivity=this;
-		
 		ccoords = new Coordinates(getBaseContext());
-		bsavepostion = (Button) findViewById(R.id.bSavePosition);
+		bsaveposition = (Button) findViewById(R.id.bSavePosition);
+		bsaveposition.setOnTouchListener(new OnTouchListener(){
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				final Location pos = ccoords.get_location();
+				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+				final EditText input = new EditText(mActivity);
+				input.setInputType(InputType.TYPE_CLASS_TEXT);
+				dialog.setView(input);
+				dialog.setMessage("Name for this Position") //$NON-NLS-1$
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() { //$NON-NLS-1$
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+										String inhalt = input.getText().toString();
+										if (db.exists_location(inhalt) == 0) {
+											db.add_location(inhalt);
+											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
+													pos.getAccuracy(),pos.getProvider());
+										}
+									}
+								})
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { //$NON-NLS-1$
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+									}
+								});
+				dialog.show();
+				return false;
+			}
+			
+		});
 		bshowposition = (Button) findViewById(R.id.bShowPosition);
 		bshowposition.setOnTouchListener(new OnTouchListener(){
 
