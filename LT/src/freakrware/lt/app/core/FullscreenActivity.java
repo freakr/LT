@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,17 +80,17 @@ public class FullscreenActivity extends Activity {
 		mActivity=this;
 		ccoords = new Coordinates(getBaseContext());
 		bsaveposition = (Button) findViewById(R.id.bSavePosition);
-		bsaveposition.setOnTouchListener(new OnTouchListener(){
+		bsaveposition.setOnClickListener(new OnClickListener(){
 
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+			public void onClick(View v) {
 				final Location pos = ccoords.get_location();
 				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
 				final EditText input = new EditText(mActivity);
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
 				dialog.setView(input);
-				dialog.setMessage("Name for this Position") //$NON-NLS-1$
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() { //$NON-NLS-1$
+				dialog.setMessage("Name for this Position") 
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int id) {
@@ -101,16 +102,14 @@ public class FullscreenActivity extends Activity {
 										}
 									}
 								})
-						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { //$NON-NLS-1$
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
 									@Override
 									public void onClick(DialogInterface dialog,
 											int id) {
 									}
 								});
 				dialog.show();
-				return false;
 			}
-			
 		});
 		bshowposition = (Button) findViewById(R.id.bShowPosition);
 		bshowposition.setOnTouchListener(new OnTouchListener(){
