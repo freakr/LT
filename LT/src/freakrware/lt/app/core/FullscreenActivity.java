@@ -99,6 +99,10 @@ public class FullscreenActivity extends Activity {
 											db.add_location(inhalt);
 											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
 													pos.getAccuracy(),pos.getProvider());
+											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
+										}else{
+											Toast.makeText(mActivity, inhalt+" exists ,pls take another Name", Toast.LENGTH_LONG).show();
+											dialog.cancel();
 										}
 									}
 								})
