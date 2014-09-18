@@ -1,5 +1,7 @@
 package freakrware.lt.app.core;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.location.Location;
 import android.widget.TextView;
@@ -15,14 +17,16 @@ public class ActualCoords implements Runnable,Interfaces{
 	private TextView vlongitude;
 	private TextView vaccuracy;
 	private TextView vprovider;
+	private TextView vtime;
 	
-	public ActualCoords(TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vprovider, Coordinates ccoords, Activity mActivity) {
+	public ActualCoords(TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vtime, TextView vprovider, Coordinates ccoords, Activity mActivity) {
 		this.ccoords = ccoords;
 		this.mActivity = mActivity;
 		this.vlongitude = vlongitude;
 		this.vlatitude = vlatitude;
 		this.vaccuracy = vaccuracy;
 		this.vprovider = vprovider;
+		this.vtime = vtime;
 	}
 	
 	public Location get_actual_coords(){
@@ -39,6 +43,7 @@ public class ActualCoords implements Runnable,Interfaces{
 	        		vlatitude.setText(String.valueOf(get_actual_coords().getLatitude()));
 	        		vaccuracy.setText(String.valueOf(get_actual_coords().getAccuracy())+" m");
 	        		vprovider.setText(String.valueOf(get_actual_coords().getProvider()));
+	        		vtime.setText(String.valueOf(new Date(get_actual_coords().getTime())));
 		        }
 		    });
 			standard.wait(5000);

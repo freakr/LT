@@ -67,6 +67,7 @@ public class FullscreenActivity extends Activity {
 	private TextView vlatitude ;//= (TextView) this.findViewById(R.id.TVLatitudevalue);
 	private TextView vaccuracy ;//= (TextView) this.findViewById(R.id.TVAccuracyvalue);
 	private TextView vprovider ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
+	private TextView vtime ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
 	Activity mActivity;
 
 	private Button bsaveposition;
@@ -122,7 +123,7 @@ public class FullscreenActivity extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				String lati = String.valueOf(vlatitude.getText());
 				String longi = String.valueOf(vlongitude.getText());
-				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d (%s)", lati, longi,100,"You are Here");
+				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d", lati, longi,500);
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 				try
 		        {
@@ -148,7 +149,8 @@ public class FullscreenActivity extends Activity {
 		vlatitude = (TextView) findViewById(R.id.TVLatitudevalue);
 		vaccuracy = (TextView) findViewById(R.id.TVAccuracyvalue);
 		vprovider = (TextView) findViewById(R.id.TVProvidervalue);
-		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vprovider,ccoords,mActivity);
+		vtime = (TextView) findViewById(R.id.TVTimevalue);
+		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vtime,vprovider,ccoords,mActivity);
 		new Thread(acoord).start();
 		//acoord.start(); //set_actual_coords();
 		
