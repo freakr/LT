@@ -1,9 +1,12 @@
 package freakrware.lt.app.core;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.location.Location;
+import android.text.format.DateFormat;
 import android.widget.TextView;
 import freakrware.lt.app.core.util.Coordinates;
 import freakrware.lt.app.resources.Interfaces;
@@ -39,11 +42,14 @@ public class ActualCoords implements Runnable,Interfaces{
 		while(true){
 			mActivity.runOnUiThread(new Runnable() {
 		        public void run() {
+		        	SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss",Locale.GERMAN);
+		        	Date timecoords = new Date(get_actual_coords().getTime());
+		        	String time = tf.format(timecoords);
 		        	vlongitude.setText(String.valueOf(get_actual_coords().getLongitude()));
 	        		vlatitude.setText(String.valueOf(get_actual_coords().getLatitude()));
 	        		vaccuracy.setText(String.valueOf(get_actual_coords().getAccuracy())+" m");
 	        		vprovider.setText(String.valueOf(get_actual_coords().getProvider()));
-	        		vtime.setText(String.valueOf(new Date(get_actual_coords().getTime())));
+	        		vtime.setText(String.valueOf(time));
 		        }
 		    });
 			standard.wait(5000);
