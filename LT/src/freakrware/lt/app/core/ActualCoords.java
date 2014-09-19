@@ -45,11 +45,13 @@ public class ActualCoords implements Runnable,Interfaces{
 		        	SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss",Locale.GERMAN);
 		        	Date timecoords = new Date(get_actual_coords().getTime());
 		        	String time = tf.format(timecoords);
+		        	String provider = String.valueOf(get_actual_coords().getProvider());
 		        	vlongitude.setText(String.valueOf(get_actual_coords().getLongitude()));
 	        		vlatitude.setText(String.valueOf(get_actual_coords().getLatitude()));
 	        		vaccuracy.setText(String.valueOf(get_actual_coords().getAccuracy())+" m");
-	        		vprovider.setText(String.valueOf(get_actual_coords().getProvider()));
-	        		vtime.setText(String.valueOf(time));
+	        		vtime.setText(time);
+	        		vprovider.setText(provider.toUpperCase());
+	        		
 		        }
 		    });
 			standard.wait(5000);

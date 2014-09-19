@@ -1,58 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_overlay"
+    android:orientation="vertical"
     tools:context="freakrware.lt.app.core.FullscreenActivity" >
 
     <!--
          The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc.
+         
     -->
+
 
     <!--
          This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows.
-    -->
-
-    <LinearLayout
-        android:id="@+id/fullscreen_content_controls"
-        style="?metaButtonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/black_overlay"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent" >
-
-        <Button
-            android:id="@+id/bSavePosition"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0.1"
-            android:text="Save Position"
-            android:textStyle="bold"
-            android:typeface="serif" />
-
-        <Button
-            android:id="@+id/bShowPosition"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0.1"
-            android:text="Show Position"
-            android:textAppearance="?android:attr/textAppearanceMediumInverse"
-            android:textStyle="bold"
-            android:typeface="serif" />
-    </LinearLayout>
+         -->
 
     <LinearLayout
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_weight="0.1"
+        android:gravity="top"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -177,4 +151,46 @@
         </LinearLayout>
     </LinearLayout>
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_menu_compass" />
+
+    <LinearLayout
+        android:id="@+id/fullscreen_content_controls"
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="0.1"
+        android:background="@color/black_overlay"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent" >
+
+        <Button
+            android:id="@+id/bSavePosition"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.1"
+            android:text="Save Position"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <Button
+            android:id="@+id/bShowPosition"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.1"
+            android:text="Show Position"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textStyle="bold"
+            android:typeface="serif" />
+    </LinearLayout>
+
+</LinearLayout>

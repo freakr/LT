@@ -43,7 +43,7 @@ public class FullscreenActivity extends Activity {
 	 * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
 	 * user interaction before hiding the system UI.
 	 */
-	private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+	private static final int AUTO_HIDE_DELAY_MILLIS = 5000;
 
 	/**
 	 * If set, will toggle the system UI visibility upon interaction. Otherwise,
@@ -117,13 +117,13 @@ public class FullscreenActivity extends Activity {
 			}
 		});
 		bshowposition = (Button) findViewById(R.id.bShowPosition);
-		bshowposition.setOnTouchListener(new OnTouchListener(){
+		bshowposition.setOnClickListener(new OnClickListener(){
 
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+			public void onClick(View v) {
 				String lati = String.valueOf(vlatitude.getText());
 				String longi = String.valueOf(vlongitude.getText());
-				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d", lati, longi,500);
+				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d", lati, longi,250);
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 				try
 		        {
@@ -141,7 +141,6 @@ public class FullscreenActivity extends Activity {
 		                Toast.makeText(mActivity, "Please install a maps application", Toast.LENGTH_LONG).show();
 		            }
 		        }
-				return false;
 			}
 			
 		});
