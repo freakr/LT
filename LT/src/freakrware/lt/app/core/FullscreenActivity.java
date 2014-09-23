@@ -1,29 +1,12 @@
 package freakrware.lt.app.core;
 
-import java.util.Locale;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import freakrware.lt.app.core.util.Coordinates;
-import freakrware.lt.app.core.util.DataBase;
 import freakrware.lt.app.core.util.SystemUiHider;
 
 /**
@@ -60,18 +43,11 @@ public class FullscreenActivity extends Activity {
 	 * The instance of the {@link SystemUiHider} for this activity.
 	 */
 	private SystemUiHider mSystemUiHider;
-	private Coordinates ccoords;
-	private ActualCoords acoord;
-	private DataBase db = new DataBase();
-	private TextView vlongitude ;//= (TextView) this.findViewById(R.id.TVLongitudevalue);
-	private TextView vlatitude ;//= (TextView) this.findViewById(R.id.TVLatitudevalue);
-	private TextView vaccuracy ;//= (TextView) this.findViewById(R.id.TVAccuracyvalue);
-	private TextView vprovider ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
-	private TextView vtime ;//= (TextView) this.findViewById(R.id.TVProvidervalue);
-	Activity mActivity;
+	
+	
+	public Activity mActivity;
 
-	private Button bsaveposition;
-	private Button bshowposition;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,184 +55,7 @@ public class FullscreenActivity extends Activity {
 
 		setContentView(R.layout.activity_fullscreen);
 		mActivity=this;
-		ccoords = new Coordinates(getBaseContext());
-		bsaveposition = (Button) findViewById(R.id.bSavePosition);
-		bsaveposition.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				final Location pos = ccoords.get_location();
-				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-				final EditText input = new EditText(mActivity);
-				input.setInputType(InputType.TYPE_CLASS_TEXT);
-				dialog.setView(input);
-				dialog.setMessage("Name for this Position") 
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
-										String inhalt = input.getText().toString();
-										if (db.exists_location(inhalt) == 0) {
-											db.add_location(inhalt);
-											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
-													pos.getAccuracy(),pos.getProvider());
-											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
-										}else{
-											Toast.makeText(mActivity, inhalt+" exists ,pls take another Name", Toast.LENGTH_LONG).show();
-											dialog.cancel();
-										}
-									}
-								})
-						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
-									}
-								});
-				dialog.show();
-			}
-		});
-		bshowposition = (Button) findViewById(R.id.bShowPosition);
-		bshowposition.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				String lati = String.valueOf(vlatitude.getText());
-				String longi = String.valueOf(vlongitude.getText());
-				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d", lati, longi,250);
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-				try
-		        {
-		            startActivity(intent);
-		        }
-		        catch(ActivityNotFoundException ex)
-		        {
-		            try
-		            {
-		                Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-		                startActivity(unrestrictedIntent);
-		            }
-		            catch(ActivityNotFoundException innerEx)
-		            {
-		                Toast.makeText(mActivity, "Please install a maps application", Toast.LENGTH_LONG).show();
-		            }
-		        }
-			}
-			
-		});
-		vlongitude = (TextView) findViewById(R.id.TVLongitudevalue);
-		vlatitude = (TextView) findViewById(R.id.TVLatitudevalue);
-		vaccuracy = (TextView) findViewById(R.id.TVAccuracyvalue);
-		vprovider = (TextView) findViewById(R.id.TVProvidervalue);
-		vtime = (TextView) findViewById(R.id.TVTimevalue);
-		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vtime,vprovider,ccoords,mActivity);
-		new Thread(acoord).start();
-		//acoord.start(); //set_actual_coords();
-		
-		final View controlsView = findViewById(R.id.fullscreen_content_controls);
-		final View contentView = findViewById(R.id.fullscreen_content);
-
-		// Set up an instance of SystemUiHider to control the system UI for
-		// this activity.
-		mSystemUiHider = SystemUiHider.getInstance(this, contentView,
-				HIDER_FLAGS);
-		mSystemUiHider.setup();
-		mSystemUiHider
-				.setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
-					// Cached values.
-					int mControlsHeight;
-					int mShortAnimTime;
-
-					@Override
-					@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-					public void onVisibilityChange(boolean visible) {
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-							// If the ViewPropertyAnimator API is available
-							// (Honeycomb MR2 and later), use it to animate the
-							// in-layout UI controls at the bottom of the
-							// screen.
-							if (mControlsHeight == 0) {
-								mControlsHeight = controlsView.getHeight();
-							}
-							if (mShortAnimTime == 0) {
-								mShortAnimTime = getResources().getInteger(
-										android.R.integer.config_shortAnimTime);
-							}
-							controlsView
-									.animate()
-									.translationY(visible ? 0 : mControlsHeight)
-									.setDuration(mShortAnimTime);
-						} else {
-							// If the ViewPropertyAnimator APIs aren't
-							// available, simply show or hide the in-layout UI
-							// controls.
-							controlsView.setVisibility(visible ? View.VISIBLE
-									: View.GONE);
-						}
-
-						if (visible && AUTO_HIDE) {
-							// Schedule a hide().
-							delayedHide(AUTO_HIDE_DELAY_MILLIS);
-						}
-					}
-				});
-
-		// Set up the user interaction to manually show or hide the system UI.
-		contentView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (TOGGLE_ON_CLICK) {
-					mSystemUiHider.toggle();
-				} else {
-					mSystemUiHider.show();
-				}
-			}
-		});
-
-		// Upon interacting with UI controls, delay any scheduled hide()
-		// operations to prevent the jarring behavior of controls going away
-		// while interacting with the UI.
 		
 	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-
-		// Trigger the initial hide() shortly after the activity has been
-		// created, to briefly hint to the user that UI controls
-		// are available.
-		delayedHide(100);
-	}
-
-	/**
-	 * Touch listener to use for in-layout UI controls to delay hiding the
-	 * system UI. This is to prevent the jarring behavior of controls going away
-	 * while interacting with activity UI.
-	 */
-	View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-		@Override
-		public boolean onTouch(View view, MotionEvent motionEvent) {
-			if (AUTO_HIDE) {
-				delayedHide(AUTO_HIDE_DELAY_MILLIS);
-			}
-			return false;
-		}
-	};
-
-	Handler mHideHandler = new Handler();
-	Runnable mHideRunnable = new Runnable() {
-		@Override
-		public void run() {
-			mSystemUiHider.hide();
-		}
-	};
-	/**
-	 * Schedules a call to hide() in [delay] milliseconds, canceling any
-	 * previously scheduled calls.
-	 */
-	private void delayedHide(int delayMillis) {
-		mHideHandler.removeCallbacks(mHideRunnable);
-		mHideHandler.postDelayed(mHideRunnable, delayMillis);
-	}
+		
 }
