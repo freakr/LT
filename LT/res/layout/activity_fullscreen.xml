@@ -6,6 +6,7 @@
     android:layout_margin="10dp"
     android:background="@color/black_overlay"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="freakrware.lt.app.core.FullscreenActivity" >
 
     <!--
