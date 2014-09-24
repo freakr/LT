@@ -21,6 +21,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -56,10 +57,7 @@ public class Live_Data_Fragment extends Fragment {
 	/**
 	 * The instance of the {@link SystemUiHider} for this activity.
 	 */
-	private SystemUiHider mSystemUiHider;
-	
-	
-	
+		private SystemUiHider mSystemUiHider;
 		private TextView vlongitude ;
     	private TextView vlatitude ;
     	private TextView vaccuracy ;
@@ -199,7 +197,7 @@ public class Live_Data_Fragment extends Fragment {
 						}
 					}
 				});
-
+		delayedHide(100);		
 		// Set up the user interaction to manually show or hide the system UI.
 		contentView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -216,24 +214,15 @@ public class Live_Data_Fragment extends Fragment {
 		// operations to prevent the jarring behavior of controls going away
 		// while interacting with the UI.
 		
-	}
+	
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-
-		// Trigger the initial hide() shortly after the activity has been
-		// created, to briefly hint to the user that UI controls
-		// are available.
-		delayedHide(100);
-	}
-
+	
 	/**
 	 * Touch listener to use for in-layout UI controls to delay hiding the
 	 * system UI. This is to prevent the jarring behavior of controls going away
 	 * while interacting with activity UI.
 	 */
-	View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+	OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			if (AUTO_HIDE) {
@@ -243,7 +232,11 @@ public class Live_Data_Fragment extends Fragment {
 		}
 	};
 
-	Handler mHideHandler = new Handler();
+	
+	return v;
+    }
+    
+    Handler mHideHandler = new Handler();
 	Runnable mHideRunnable = new Runnable() {
 		@Override
 		public void run() {
@@ -254,17 +247,13 @@ public class Live_Data_Fragment extends Fragment {
 	 * Schedules a call to hide() in [delay] milliseconds, canceling any
 	 * previously scheduled calls.
 	 */
+    
+    
 	private void delayedHide(int delayMillis) {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
 	}
-
-		
-
-        return v;
-    }
-
-    
+   
 }
 
 
