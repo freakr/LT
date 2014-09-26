@@ -1,8 +1,12 @@
 package freakrware.lt.app.resources;
 
+import android.app.Activity;
+
 public interface Standards_interface {
 
 	public class Standards{
+		
+		public Activity mActivity;
 		
 		public void wait(int time){
 		try {
@@ -15,7 +19,10 @@ public interface Standards_interface {
 			Thread t = Thread.currentThread();
 			t.setName(name + " - Thread");
 	
-	}
+		}
+		public void set_Activity(Activity activity){
+			this.mActivity = activity;
+		}
 	
 	}
 }

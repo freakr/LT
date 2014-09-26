@@ -5,6 +5,7 @@ import java.util.Locale;
 import freakrware.lt.app.core.util.Coordinates;
 import freakrware.lt.app.core.util.DataBase;
 import freakrware.lt.app.core.util.SystemUiHider;
+import freakrware.lt.app.resources.Interfaces;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,7 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Live_Data_Fragment extends Fragment {
+public class Live_Data_Fragment extends Fragment implements Interfaces{
 	
 	/**
 	 * Touch listener to use for in-layout UI controls to delay hiding the
@@ -90,7 +91,7 @@ public class Live_Data_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.live_data_fragment, container, false);
-        
+        this.mActivity = standard.mActivity;
         ccoords = new Coordinates(mActivity);
 		
         bsaveposition = (Button) v.findViewById(R.id.bSavePosition);
