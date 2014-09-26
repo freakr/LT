@@ -79,7 +79,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
         	switch(position)
             {
             case 0: return new Live_Data_Fragment();
-            case 1: return new Live_Data_Fragment();
+            case 1: return new Positions_View_Fragment();
             default : return new Live_Data_Fragment();
             }
         }

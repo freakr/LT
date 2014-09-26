@@ -90,7 +90,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.live_data_fragment, container, false);
+        View v = inflater.inflate(R.layout.fragment_live_data, container, false);
         this.mActivity = standard.mActivity;
         ccoords = new Coordinates(mActivity);
 		
