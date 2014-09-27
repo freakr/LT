@@ -20,6 +20,7 @@ import freakrware.lt.app.resources.Interfaces;
 public class FullscreenActivity extends FragmentActivity implements Interfaces{
 
 	public Activity mActivity;
+	
 	/**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -45,6 +46,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		setContentView(R.layout.activity_fullscreen);
 		mActivity=this;
 		standard.set_Activity(mActivity);
+		standard.ini_Ccoords();
 		
 
         // Instantiate a ViewPager and a PagerAdapter.
@@ -78,9 +80,9 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
         public Fragment getItem(int position) {
         	switch(position)
             {
-            case 0: return new Live_Data_Fragment();
-            case 1: return new Positions_View_Fragment();
-            default : return new Live_Data_Fragment();
+            case 0: return LDF;
+            case 1: return PVF;
+            default : return LDF;
             }
         }
 

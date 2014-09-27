@@ -25,6 +25,7 @@ public interface DataBase_interface {
 		final static String DB_COL_11 = "Range";
 		// DataBase Getter
 		final static String[] GETTER_LOCATION_EXISTS = {DB_COL_1};
+		final static String[] GETTER_LOCATIONS = {DB_COL_2};
 		final static String[] GETTER_USER = {DB_COL_1};
 		final static String[] GETTER_MESSAGEBOARD = {DB_COL_7,DB_COL_8,DB_COL_9,DB_COL_10,DB_COL_5,DB_COL_11};
 		final static String[] GETTER_LASTIP = {DB_COL_4};

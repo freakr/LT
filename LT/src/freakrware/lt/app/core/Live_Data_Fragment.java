@@ -2,10 +2,6 @@ package freakrware.lt.app.core;
 
 import java.util.Locale;
 
-import freakrware.lt.app.core.util.Coordinates;
-import freakrware.lt.app.core.util.DataBase;
-import freakrware.lt.app.core.util.SystemUiHider;
-import freakrware.lt.app.resources.Interfaces;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,13 +18,14 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import freakrware.lt.app.core.util.SystemUiHider;
+import freakrware.lt.app.resources.Interfaces;
 
 public class Live_Data_Fragment extends Fragment implements Interfaces{
 	
@@ -80,10 +77,8 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     	private TextView vprovider ;
     	private TextView vtime ;
     	private Activity mActivity;
-    	private Coordinates ccoords;
     	private ActualCoords acoord;
-    	private DataBase db = new DataBase();
-
+    	
     	private Button bsaveposition;
     	private Button bshowposition;
 	
@@ -92,14 +87,14 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_live_data, container, false);
         this.mActivity = standard.mActivity;
-        ccoords = new Coordinates(mActivity);
+        
 		
         bsaveposition = (Button) v.findViewById(R.id.bSavePosition);
 		bsaveposition.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				final Location pos = ccoords.get_location();
+				final Location pos = standard.ccoords.get_location();
 				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
 				final EditText input = new EditText(mActivity);
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -115,6 +110,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
 													pos.getAccuracy(),pos.getProvider());
 											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
+											PVF_R.positions_refresh();
 										}else{
 											Toast.makeText(mActivity, inhalt+" exists ,pls take another Name", Toast.LENGTH_LONG).show();
 											dialog.cancel();
@@ -163,7 +159,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		vaccuracy = (TextView) v.findViewById(R.id.TVAccuracyvalue);
 		vprovider = (TextView) v.findViewById(R.id.TVProvidervalue);
 		vtime = (TextView) v.findViewById(R.id.TVTimevalue);
-		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vtime,vprovider,ccoords,mActivity);
+		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vtime,vprovider,standard.ccoords,mActivity);
 		new Thread(acoord).start();
         
 		final View controlsView = v.findViewById(R.id.fullscreen_content_controls);

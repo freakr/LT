@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
+
 import freakrware.lt.app.resources.Interfaces;
 import android.annotation.SuppressLint;
 import android.os.Environment;
@@ -64,6 +65,11 @@ public class DataBase implements Interfaces{
 		}
 		
 		return result;
+	}
+	public String[] get_locations() {
+		set_strsql("SELECT "+DB_COL_2+" FROM "+DB_TABLE_1);
+		
+		return get_data(GETTER_LOCATIONS);
 	}
 	public String[] get_username(String userid) {
 		set_strsql("SELECT "+DB_COL_1+" FROM "+DB_TABLE_1+" WHERE "+DB_COL_2+" = '"+ userid +"'");
@@ -153,7 +159,7 @@ public class DataBase implements Interfaces{
 		
 	}
 	public boolean remove_Location(String name){
-		set_strsql("DELETE FROM "+DB_TABLE_1+" WHERE ("+DB_COL_2+") = ('"+ name +"')"); 
+		set_strsql("DELETE FROM "+DB_TABLE_1+" WHERE "+DB_COL_2+" = '"+ name+"'"); 
 				
 		return set_data();
 		
@@ -229,7 +235,7 @@ public class DataBase implements Interfaces{
 			e.printStackTrace();
 		}
 		strsql = "CREATE TABLE "+ DB_TABLE_2 +" ("+ DB_COL_1 +" INTEGER , "+ DB_COL_3 +" DOUBLE, "+ DB_COL_4 +" DOUBLE, "+ DB_COL_5 +" DOUBLE, "+ DB_COL_6 +" VARCHAR(255), "
-					+ "FOREIGN KEY ("+ DB_COL_1 +") REFERENCES "+ DB_TABLE_1 +" ("+ DB_COL_1 +"))"; 
+					+ "FOREIGN KEY ("+ DB_COL_1 +") REFERENCES "+ DB_TABLE_1 +" ("+ DB_COL_1 +") on delete cascade)"; 
 		try {
 			stmt.executeUpdate(strsql);
 		} catch (SQLException e) {
@@ -242,7 +248,7 @@ public class DataBase implements Interfaces{
 			e.printStackTrace();
 		}
 		strsql = "CREATE TABLE "+ DB_TABLE_4 +" ("+ DB_COL_7 +" INTEGER , "+ DB_COL_9 +" INTEGER, "+ DB_COL_10 +" INTEGER, "+ DB_COL_11 +" DOUBLE, "
-					+ "FOREIGN KEY ("+ DB_COL_7 +") REFERENCES "+ DB_TABLE_3 +" ("+ DB_COL_7 +"))"; 
+					+ "FOREIGN KEY ("+ DB_COL_7 +") REFERENCES "+ DB_TABLE_3 +" ("+ DB_COL_7 +") on delete cascade)"; 
 		try {
 			stmt.executeUpdate(strsql);
 		} catch (SQLException e) {
@@ -297,6 +303,8 @@ public class DataBase implements Interfaces{
 	        }
 	    });
 	}
+
+	
 
 	
 
