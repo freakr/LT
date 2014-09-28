@@ -24,7 +24,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 	/**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -82,6 +82,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
             {
             case 0: return LDF;
             case 1: return PVF;
+            case 2: return TVF;
             default : return LDF;
             }
         }

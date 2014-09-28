@@ -66,6 +66,22 @@ public class DataBase implements Interfaces{
 		
 		return result;
 	}
+	public boolean add_task(String name) {
+		set_strsql("INSERT INTO "+DB_TABLE_3+" ("+DB_COL_8+") VALUES ('"+ name +"')"); 
+		
+		return set_data();
+	}
+	public boolean remove_task(String name){
+		set_strsql("DELETE FROM "+DB_TABLE_3+" WHERE "+DB_COL_8+" = '"+ name+"'"); 
+				
+		return set_data();
+	
+	}
+public String[] get_tasks() {
+		set_strsql("SELECT "+DB_COL_8+" FROM "+DB_TABLE_3);
+		
+		return get_data(GETTER_TASKS_NAME);
+	}
 	public String[] get_locations_data(int x) {
 		set_strsql("SELECT "+DB_COL_3+","+DB_COL_4+","+DB_COL_5+","+DB_COL_6+" FROM "+DB_TABLE_2+" WHERE "+DB_COL_1+" = "+ x);
 		
@@ -95,6 +111,18 @@ public class DataBase implements Interfaces{
 		set_strsql("SELECT "+DB_COL_4+" FROM "+DB_TABLE_1+" WHERE "+DB_COL_1+" = '"+ username +"'");
 		String[] ip = get_data(GETTER_LASTIP);
 		return ip[0];
+	}
+	public int exists_task(String name){
+		set_strsql("SELECT "+DB_COL_7+" FROM "+DB_TABLE_3+" WHERE "+DB_COL_8+" = '"+ name +"'");
+		
+		String[] result = get_data(GETTER_TASK_EXISTS);
+		for(int i=0; i< result.length;i++){
+			 if(result[i] != null){
+			 return Integer.parseInt(result[i]);
+			 	}
+			 }
+		return 0;
+		
 	}
 	public int exists_location(String name){
 		set_strsql("SELECT "+DB_COL_1+" FROM "+DB_TABLE_1+" WHERE "+DB_COL_2+" = '"+ name +"'");
@@ -138,7 +166,6 @@ public class DataBase implements Interfaces{
 		
 		return set_data();
 	}
-	
 	public int message_exists(String message){
 		set_strsql("SELECT "+DB_COL_5+" FROM "+DB_TABLE_2+" WHERE "+DB_COL_6+" = '"+ message +"'");
 		
@@ -149,27 +176,22 @@ public class DataBase implements Interfaces{
 			 	}
 			 }
 		return 0;
-		
 	}
 	public boolean message_add(String message) {
 		set_strsql("INSERT INTO "+DB_TABLE_2+" ("+DB_COL_6+") VALUES ('"+ message +"')"); 
 		
 		return set_data();
 	}
-
 	public boolean add_location(String name){
 		set_strsql("INSERT INTO "+DB_TABLE_1+" ("+DB_COL_2+") VALUES ('"+ name +"')"); 
 				
 		return set_data();
-		
 	}
 	public boolean remove_Location(String name){
 		set_strsql("DELETE FROM "+DB_TABLE_1+" WHERE "+DB_COL_2+" = '"+ name+"'"); 
 				
 		return set_data();
-		
 	}
-	
 	public boolean set_data(){
 		return execute_update();
 	}
@@ -312,6 +334,9 @@ public class DataBase implements Interfaces{
 	        }
 	    });
 	}
+
+	
+
 
 	
 

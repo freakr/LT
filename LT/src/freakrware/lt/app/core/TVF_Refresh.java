@@ -1,0 +1,146 @@
+package freakrware.lt.app.core;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.text.InputType;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+import freakrware.lt.app.resources.Interfaces;
+
+public class TVF_Refresh implements Interfaces{
+	
+	private Activity mActivity;
+	private FrameLayout fl;
+	private View rootview;
+	private String[] tasks;
+	
+	public void refresh(){
+		this.mActivity = standard.mActivity;
+		fl = (FrameLayout) rootview.findViewById(R.id.FL);
+		if(fl.getChildCount() != 0){
+			fl.removeAllViews();
+		}
+		TableLayout tl = new TableLayout(mActivity);
+        TableRow trpositions = new TableRow(mActivity);
+        TextView tv = new TextView(mActivity);
+        tv.setText("Tasks");
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+        trpositions.addView(tv);
+        trpositions.setGravity(Gravity.CENTER);
+        TextView divider = new TextView(mActivity);
+        divider.setBackgroundColor(Color.WHITE);
+        divider.setHeight(3);
+        TableRow trnewtask = new TableRow(mActivity);
+    	final Button bnewtask = new Button(mActivity);
+    	bnewtask.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	bnewtask.setText("New Task");
+        bnewtask.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        bnewtask.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick( View v) {
+				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+				final EditText input = new EditText(mActivity);
+				input.setInputType(InputType.TYPE_CLASS_TEXT);
+				dialog.setView(input);
+				dialog.setMessage("Name for this Task") 
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+										String inhalt = input.getText().toString();
+										if (db.exists_task(inhalt) == 0) {
+											db.add_task(inhalt);
+											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
+											TVF_R.refresh();
+										}else{
+											Toast.makeText(mActivity, inhalt+" exists ,pls take another Name", Toast.LENGTH_LONG).show();
+											dialog.cancel();
+										}
+									}
+								})
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+									}
+								});
+				dialog.show();
+			}
+		});
+        TextView divider2 = new TextView(mActivity);
+        divider2.setBackgroundColor(Color.WHITE);
+        divider2.setHeight(6);
+        trnewtask.addView(bnewtask);
+        tl.addView(trpositions);
+        tl.addView(divider);
+        tl.addView(trnewtask);
+        tl.addView(divider2);
+		tasks = db.get_tasks();
+        for(int x = 0;x < tasks.length;x++){
+        	TableRow trposis = new TableRow(mActivity);
+        	final Button btasks = new Button(mActivity);
+        	btasks.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+        	btasks.setText(tasks[x]);
+            btasks.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            btasks.setOnClickListener(new OnClickListener(){
+
+    			@Override
+    			public void onClick( View v) {
+    				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+    				dialog.setMessage("Delete ?") 
+    						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    									@Override
+    									public void onClick(DialogInterface dialog,
+    											int id) {
+    										if (db.exists_task(String.valueOf(btasks.getText())) != 0) {
+    											if(db.remove_task(String.valueOf(btasks.getText()))){
+    												Toast.makeText(mActivity, String.valueOf(btasks.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
+    												TVF_R.refresh();
+    											}else{
+    												Toast.makeText(mActivity, "Error , "+ String.valueOf(btasks.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
+    											}
+    										}else{
+    											Toast.makeText(mActivity, String.valueOf(btasks.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
+    											dialog.cancel();
+    										}
+    									}
+    								})
+    						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
+    									@Override
+    									public void onClick(DialogInterface dialog,
+    											int id) {
+    									}
+    								});
+    				dialog.show();
+    			}
+    		});
+            
+            btasks.setGravity(Gravity.CENTER);
+            trposis.addView(btasks);
+            trposis.setGravity(Gravity.CENTER);
+            tl.addView(trposis);
+            
+       }
+        fl.addView(tl);
+	}
+
+	
+	public void set_rootview(View v){
+		this.rootview = v;
+	}
+    
+	
+	
+}

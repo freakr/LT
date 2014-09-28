@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import freakrware.lt.app.resources.Interfaces;
 
-public class Positions_View_Fragment extends Fragment implements Interfaces{
+public class Tasks_View_Fragment extends Fragment implements Interfaces{
 	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_positions_list, container, false);
-        PVF_R.set_rootview(v);
-        PVF_R.refresh();
+        View v = inflater.inflate(R.layout.fragment_tasks_list, container, false);
+        TVF_R.set_rootview(v);
+        TVF_R.refresh();
 		return v;
 	}
 	

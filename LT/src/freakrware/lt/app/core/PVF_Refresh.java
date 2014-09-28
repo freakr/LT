@@ -31,7 +31,7 @@ public class PVF_Refresh implements Interfaces{
 	private String[] locs;
 	private String[] locsshow;
 	
-	public void positions_refresh(){
+	public void refresh(){
 		this.mActivity = standard.mActivity;
 		fl = (FrameLayout) rootview.findViewById(R.id.FL);
 		if(fl.getChildCount() != 0){
@@ -72,7 +72,7 @@ public class PVF_Refresh implements Interfaces{
     										if (db.exists_location(String.valueOf(blocs.getText())) != 0) {
     											if(db.remove_Location(String.valueOf(blocs.getText()))){
     												Toast.makeText(mActivity, String.valueOf(blocs.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
-    												PVF_R.positions_refresh();
+    												PVF_R.refresh();
     											}else{
     												Toast.makeText(mActivity, "Error , "+ String.valueOf(blocs.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
     											}
