@@ -133,7 +133,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 			public void onClick(View v) {
 				String lati = String.valueOf(vlatitude.getText());
 				String longi = String.valueOf(vlongitude.getText());
-				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?z=%d", lati, longi,250);
+				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,"Actuall Postion");
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 				try
 		        {

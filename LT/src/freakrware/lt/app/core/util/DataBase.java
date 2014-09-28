@@ -66,10 +66,15 @@ public class DataBase implements Interfaces{
 		
 		return result;
 	}
+	public String[] get_locations_data(int x) {
+		set_strsql("SELECT "+DB_COL_3+","+DB_COL_4+","+DB_COL_5+","+DB_COL_6+" FROM "+DB_TABLE_2+" WHERE "+DB_COL_1+" = "+ x);
+		
+		return get_data(GETTER_LOCATIONS_DATA);
+	}
 	public String[] get_locations() {
 		set_strsql("SELECT "+DB_COL_2+" FROM "+DB_TABLE_1);
 		
-		return get_data(GETTER_LOCATIONS);
+		return get_data(GETTER_LOCATIONS_NAME);
 	}
 	public String[] get_username(String userid) {
 		set_strsql("SELECT "+DB_COL_1+" FROM "+DB_TABLE_1+" WHERE "+DB_COL_2+" = '"+ userid +"'");
@@ -170,15 +175,19 @@ public class DataBase implements Interfaces{
 	}
 	@SuppressWarnings("null")
 	public String[] get_data(String[] getter){
-		ArrayList<String> result = new ArrayList<String>();
+		Vector result = new Vector();
 		execute_query();
 		try {
 			while(rs.next())
 			{
 				for(int y = 0;y < getter.length;y++){
-					result.add(rs.getString(getter[y]));
+					if(getter[y].equals(DB_COL_3)||getter[y].equals(DB_COL_4)||getter[y].equals(DB_COL_5)){
+						result.add(rs.getDouble(getter[y]));
+					}
+					else{
+						result.add(rs.getString(getter[y]));
+					}
 				}
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -186,7 +195,7 @@ public class DataBase implements Interfaces{
 		close_result_set();
 		String[] resultarray = new String[result.size()];
 		for(int x = 0; x < result.size();x++){
-			resultarray[x] = result.get(x);
+			resultarray[x] = String.valueOf(result.get(x));
 		}
 		return resultarray;
 		
@@ -303,6 +312,8 @@ public class DataBase implements Interfaces{
 	        }
 	    });
 	}
+
+	
 
 	
 

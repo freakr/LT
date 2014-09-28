@@ -1,9 +1,14 @@
 package freakrware.lt.app.core;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +28,8 @@ public class PVF_Refresh implements Interfaces{
 	private LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
 	private FrameLayout fl;
 	private View rootview;
+	private String[] locs;
+	private String[] locsshow;
 	
 	public void positions_refresh(){
 		this.mActivity = standard.mActivity;
@@ -43,13 +50,13 @@ public class PVF_Refresh implements Interfaces{
         divider.setHeight(5);
         tl.addView(trpositions);
         tl.addView(divider);
-		String[] locs = db.get_locations();
+		locs = db.get_locations();
         for(int x = 0;x < locs.length;x++){
+        	final String name = locs[x];
         	TableRow trposis = new TableRow(mActivity);
-        	LinearLayout ll = new LinearLayout(mActivity);
-        	ll.setOrientation(LinearLayout.VERTICAL);
-        	ll.setWeightSum(6f);
+        	locsshow = db.get_locations_data(db.exists_location(locs[x]));
         	final Button blocs = new Button(mActivity);
+        	blocs.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
         	blocs.setText(locs[x]);
             blocs.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             blocs.setOnClickListener(new OnClickListener(){
@@ -84,16 +91,45 @@ public class PVF_Refresh implements Interfaces{
     				dialog.show();
     			}
     		});
-            blocs.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
+            final Button blocsshow = new Button(mActivity);
+        	blocsshow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+        	blocsshow.setText("Show Position");
+            blocsshow.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            blocsshow.setOnClickListener(new OnClickListener(){
+
+    			@Override
+    			public void onClick(View v) {
+    				String lati = String.valueOf(locsshow[0]);
+    				String longi = String.valueOf(locsshow[1]);
+    				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,name);
+    				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+    				try
+    		        {
+    		            mActivity.startActivity(intent);
+    		        }
+    		        catch(ActivityNotFoundException ex)
+    		        {
+    		            try
+    		            {
+    		                Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+    		                mActivity.startActivity(unrestrictedIntent);
+    		            }
+    		            catch(ActivityNotFoundException innerEx)
+    		            {
+    		                Toast.makeText(mActivity, "Please install a maps application", Toast.LENGTH_LONG).show();
+    		            }
+    		        }
+    			}
+    			
+    		});
             blocs.setGravity(Gravity.CENTER);
-            ll.addView(blocs);
-            ll.setGravity(Gravity.CENTER);
-            trposis.addView(ll);
+            trposis.addView(blocs);
+            blocsshow.setGravity(Gravity.CENTER);
+            trposis.addView(blocsshow);
             trposis.setGravity(Gravity.CENTER);
             tl.addView(trposis);
             
-            
-        }
+       }
         fl.addView(tl);
 	}
 
