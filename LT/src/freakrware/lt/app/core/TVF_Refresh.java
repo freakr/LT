@@ -2,7 +2,9 @@ package freakrware.lt.app.core;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Color;
 import android.text.InputType;
 import android.util.TypedValue;
@@ -12,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ public class TVF_Refresh implements Interfaces{
 	private FrameLayout fl;
 	private View rootview;
 	private String[] tasks;
+	private Dialog adialog;
 	
 	public void refresh(){
 		this.mActivity = standard.mActivity;
@@ -96,34 +100,67 @@ public class TVF_Refresh implements Interfaces{
             btasks.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             btasks.setOnClickListener(new OnClickListener(){
 
-    			@Override
+    			
+				@Override
     			public void onClick( View v) {
     				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-    				dialog.setMessage("Delete ?") 
-    						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-    									@Override
-    									public void onClick(DialogInterface dialog,
-    											int id) {
-    										if (db.exists_task(String.valueOf(btasks.getText())) != 0) {
-    											if(db.remove_task(String.valueOf(btasks.getText()))){
-    												Toast.makeText(mActivity, String.valueOf(btasks.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
-    												TVF_R.refresh();
-    											}else{
-    												Toast.makeText(mActivity, "Error , "+ String.valueOf(btasks.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
-    											}
-    										}else{
-    											Toast.makeText(mActivity, String.valueOf(btasks.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
-    											dialog.cancel();
-    										}
-    									}
-    								})
-    						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
-    									@Override
-    									public void onClick(DialogInterface dialog,
-    											int id) {
-    									}
-    								});
-    				dialog.show();
+    				adialog = new Dialog(mActivity);
+    				final LinearLayout ll = new LinearLayout(mActivity);
+    				final Button bedit = new Button(mActivity);
+    				bedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bedit.setText("Edit");
+    	            bedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+    	            bedit.setOnClickListener(new OnClickListener(){
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							adialog.cancel();
+						}
+    	            	
+    	            });
+    	            final Button bdelete = new Button(mActivity);
+    				bdelete.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bdelete.setText("Delete");
+    	            bdelete.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+    	            bdelete.setOnClickListener(new OnClickListener(){
+
+						@Override
+						public void onClick(View v) {
+							if (db.exists_task(String.valueOf(btasks.getText())) != 0) {
+								if(db.remove_task(String.valueOf(btasks.getText()))){
+									Toast.makeText(mActivity, String.valueOf(btasks.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
+									adialog.cancel();
+									TVF_R.refresh();
+								}else{
+									Toast.makeText(mActivity, "Error , "+ String.valueOf(btasks.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
+									adialog.cancel();
+								}
+							}else{
+								adialog.cancel();
+								Toast.makeText(mActivity, String.valueOf(btasks.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
+							}
+							adialog.cancel();
+						}
+    	            	
+    	            });
+    	            ll.addView(bdelete);
+    	            ll.addView(bedit);
+    	            dialog.setView(ll);
+    				dialog.setMessage("What to do ?"); 
+    						//.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+    							//		@Override
+    								//	public void onClick(DialogInterface dialog,
+    								//			int id) {
+    									//}
+    								//})
+    						//.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
+    							//		@Override
+    								//	public void onClick(DialogInterface dialog,
+    									//		int id) {
+    									//}
+    								//});
+    				adialog = dialog.show();
     			}
     		});
             
