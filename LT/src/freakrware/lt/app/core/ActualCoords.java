@@ -39,7 +39,7 @@ public class ActualCoords implements Runnable,Interfaces{
 	@Override
 	public void run() {
 		standard.thread_rename("Location Update");
-		while(true){
+		while(!Thread.currentThread().isInterrupted()){
 			mActivity.runOnUiThread(new Runnable() {
 		        public void run() {
 		        	SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss",Locale.GERMAN);
@@ -51,12 +51,11 @@ public class ActualCoords implements Runnable,Interfaces{
 	        		vaccuracy.setText(String.valueOf(get_actual_coords().getAccuracy())+" m");
 	        		vtime.setText(time);
 	        		vprovider.setText(provider.toUpperCase());
-	        		
-		        }
+	        	}
 		    });
-			standard.wait(5000);
-		}
 		
+		standard.wait(5000);
+		
+		}
 	}
-
 }

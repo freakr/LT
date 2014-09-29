@@ -54,7 +54,9 @@ public class PVF_Refresh implements Interfaces{
         for(int x = 0;x < locs.length;x++){
         	final String name = locs[x];
         	TableRow trposis = new TableRow(mActivity);
-        	locsshow = db.get_locations_data(db.exists_location(locs[x]));
+        	locsshow = db.get_locations_data(db.exists_location(name));
+        	final String lati = String.valueOf(locsshow[0]);
+			final String longi = String.valueOf(locsshow[1]);
         	final Button blocs = new Button(mActivity);
         	blocs.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
         	blocs.setText(locs[x]);
@@ -99,8 +101,6 @@ public class PVF_Refresh implements Interfaces{
 
     			@Override
     			public void onClick(View v) {
-    				String lati = String.valueOf(locsshow[0]);
-    				String longi = String.valueOf(locsshow[1]);
     				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,name);
     				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
     				try

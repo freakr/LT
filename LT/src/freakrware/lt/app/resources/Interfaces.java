@@ -17,6 +17,7 @@ public interface Interfaces extends Standards_interface,DataBase_interface{
 	Fragment LDF = new Live_Data_Fragment();
 	PVF_Refresh PVF_R = new PVF_Refresh();
 	TVF_Refresh TVF_R = new TVF_Refresh();
+	TEF_Refresh TEF_R = new TEF_Refresh();
 	
 
 }

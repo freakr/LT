@@ -1,6 +1,7 @@
 package freakrware.lt.app.core;
 
 import java.util.Locale;
+import java.util.Set;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -83,7 +84,8 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     	private Button bshowposition;
 	
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_live_data, container, false);
         this.mActivity = standard.mActivity;
@@ -160,7 +162,17 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		vprovider = (TextView) v.findViewById(R.id.TVProvidervalue);
 		vtime = (TextView) v.findViewById(R.id.TVTimevalue);
 		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vtime,vprovider,standard.ccoords,mActivity);
-		new Thread(acoord).start();
+		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+		Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
+		for(int x = 0;x < threadArray.length;x++){
+			if(threadArray[x].getName().equals("Location Update - Thread")){
+				threadArray[x].interrupt();
+				}
+		}
+		Thread t = new Thread(acoord);
+		t.setDaemon(true);
+		t.start();
+		
         
 		final View controlsView = v.findViewById(R.id.fullscreen_content_controls);
 		final View contentView = v.findViewById(R.id.fullscreen_content);

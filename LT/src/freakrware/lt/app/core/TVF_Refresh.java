@@ -114,7 +114,7 @@ public class TVF_Refresh implements Interfaces{
 
 						@Override
 						public void onClick(View v) {
-							// TODO Auto-generated method stub
+							new Task_Edit(String.valueOf(btasks.getText()));
 							adialog.cancel();
 						}
     	            	

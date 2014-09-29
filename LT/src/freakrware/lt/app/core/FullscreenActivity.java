@@ -53,6 +53,8 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
         mPager = (ViewPager) findViewById(R.id.ViewPager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        mPager.setOffscreenPageLimit(NUM_PAGES);
+		
     }
 
     @Override
