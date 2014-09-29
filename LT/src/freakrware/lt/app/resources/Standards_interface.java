@@ -13,6 +13,11 @@ public interface Standards_interface {
 		private ActualCoords acoord; 
 
 		
+		public boolean is_Wifi_active(){
+			//TODO
+			
+			return false;
+		}
 		public void wait(int time){
 		try {
 			Thread.sleep(time);

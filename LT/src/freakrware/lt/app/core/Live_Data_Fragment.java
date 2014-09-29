@@ -6,6 +6,7 @@ import java.util.Set;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,10 +83,11 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     	
     	private Button bsaveposition;
     	private Button bshowposition;
+
+		protected Dialog adialog;
 	
 
-    @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_live_data, container, false);
         this.mActivity = standard.mActivity;
@@ -98,15 +100,20 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 			public void onClick(View v) {
 				final Location pos = standard.ccoords.get_location();
 				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+				adialog = new Dialog(mActivity);
 				final EditText input = new EditText(mActivity);
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
 				dialog.setView(input);
-				dialog.setMessage("Name for this Position") 
+				dialog.setMessage("Name for this Position (max. 20 Chars)") 
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int id) {
 										String inhalt = input.getText().toString();
+										if(inhalt.length() > 20){
+											Toast.makeText(mActivity, inhalt+" is to long ,pls take another Name", Toast.LENGTH_LONG).show();
+											adialog.cancel();
+										}
 										if (db.exists_location(inhalt) == 0) {
 											db.add_location(inhalt);
 											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
@@ -115,7 +122,6 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 											PVF_R.refresh();
 										}else{
 											Toast.makeText(mActivity, inhalt+" exists ,pls take another Name", Toast.LENGTH_LONG).show();
-											dialog.cancel();
 										}
 									}
 								})
@@ -125,7 +131,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 											int id) {
 									}
 								});
-				dialog.show();
+				adialog = dialog.show();
 			}
 		});
 		bshowposition = (Button) v.findViewById(R.id.bShowPosition);
@@ -135,7 +141,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 			public void onClick(View v) {
 				String lati = String.valueOf(vlatitude.getText());
 				String longi = String.valueOf(vlongitude.getText());
-				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,"Actuall Postion");
+				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,"Actual Postion");
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 				try
 		        {

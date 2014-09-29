@@ -174,8 +174,9 @@
             android:id="@+id/bSavePosition"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_margin="10dp"
-            android:layout_weight="0.1"
+            android:layout_weight="1"
             android:text="Save Position"
             android:textStyle="bold"
             android:typeface="serif" />
@@ -184,12 +185,14 @@
             android:id="@+id/bShowPosition"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_margin="10dp"
-            android:layout_weight="0.1"
+            android:layout_weight="1"
             android:text="Show Position"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textStyle="bold"
             android:typeface="serif" />
+
     </LinearLayout>
 
 </LinearLayout>

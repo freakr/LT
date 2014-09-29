@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,19 +26,20 @@ import freakrware.lt.app.resources.Interfaces;
 public class TVF_Refresh implements Interfaces{
 	
 	private Activity mActivity;
-	private FrameLayout fl;
+	private RelativeLayout fl;
 	private View rootview;
 	private String[] tasks;
 	private Dialog adialog;
 	
 	public void refresh(){
 		this.mActivity = standard.mActivity;
-		fl = (FrameLayout) rootview.findViewById(R.id.FL);
+		fl = (RelativeLayout) rootview.findViewById(R.id.FL);
 		if(fl.getChildCount() != 0){
 			fl.removeAllViews();
 		}
+		ScrollView sv = new ScrollView(mActivity);
 		TableLayout tl = new TableLayout(mActivity);
-        TableRow trpositions = new TableRow(mActivity);
+		TableRow trpositions = new TableRow(mActivity);
         TextView tv = new TextView(mActivity);
         tv.setText("Tasks");
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
@@ -158,7 +161,10 @@ public class TVF_Refresh implements Interfaces{
             tl.addView(trposis);
             
        }
-        fl.addView(tl);
+        sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT, 1));
+        tl.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT, 1));
+    	sv.addView(tl);
+        fl.addView(sv);
 	}
 
 	
