@@ -16,10 +16,10 @@ public class MyBootService extends Service {
 	@Override
 	public void onStart(Intent intent, int startid) {
 
-		Alarm alarm = new Alarm(this);
-		alarm.Start();
+		//Alarm alarm = new Alarm(this);
+		//alarm.Start();
 
-		stopSelf();
+		//stopSelf();
 
 	}
 

@@ -1,5 +1,6 @@
 package freakrware.lt.app.resources;
 
+import freakrware.lt.app.core.ActualCoords;
 import freakrware.lt.app.core.util.Coordinates;
 import android.app.Activity;
 
@@ -8,7 +9,8 @@ public interface Standards_interface {
 	public class Standards{
 		
 		public Activity mActivity;
-		public Coordinates ccoords; 
+		public Coordinates ccoords;
+		private ActualCoords acoord; 
 
 		
 		public void wait(int time){
@@ -28,6 +30,12 @@ public interface Standards_interface {
 		}
 		public void ini_Ccoords(){
 			this.ccoords = new Coordinates(mActivity);
+		}
+		public void set_ActualCoords(ActualCoords acoord) {
+			this.acoord = acoord;
+		}
+		public ActualCoords get_ActualCoords() {
+			return acoord;
 		}
 	}
 }

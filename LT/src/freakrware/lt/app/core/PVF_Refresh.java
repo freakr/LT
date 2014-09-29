@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,16 +21,20 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import freakrware.lt.app.core.util.Coordinates;
 import freakrware.lt.app.resources.Interfaces;
 
 public class PVF_Refresh implements Interfaces{
 	
 	private Activity mActivity;
-	private LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
 	private FrameLayout fl;
 	private View rootview;
 	private String[] locs;
 	private String[] locsshow;
+	protected Dialog adialog;
+	private TextView[] tvdistancearray;
+	private ActualCoords acoord;
+	private String[] names;
 	
 	public void refresh(){
 		this.mActivity = standard.mActivity;
@@ -51,6 +56,8 @@ public class PVF_Refresh implements Interfaces{
         tl.addView(trpositions);
         tl.addView(divider);
 		locs = db.get_locations();
+		tvdistancearray = new TextView[locs.length];
+		names = new String[locs.length];
         for(int x = 0;x < locs.length;x++){
         	final String name = locs[x];
         	TableRow trposis = new TableRow(mActivity);
@@ -63,77 +70,108 @@ public class PVF_Refresh implements Interfaces{
             blocs.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             blocs.setOnClickListener(new OnClickListener(){
 
-    			@Override
+    			
+
+				@Override
     			public void onClick( View v) {
     				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-    				dialog.setMessage("Delete ?") 
-    						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-    									@Override
-    									public void onClick(DialogInterface dialog,
-    											int id) {
-    										if (db.exists_location(String.valueOf(blocs.getText())) != 0) {
-    											if(db.remove_Location(String.valueOf(blocs.getText()))){
-    												Toast.makeText(mActivity, String.valueOf(blocs.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
-    												PVF_R.refresh();
-    											}else{
-    												Toast.makeText(mActivity, "Error , "+ String.valueOf(blocs.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
-    											}
-    										}else{
-    											Toast.makeText(mActivity, String.valueOf(blocs.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
-    											dialog.cancel();
-    										}
-    									}
-    								})
-    						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
-    									@Override
-    									public void onClick(DialogInterface dialog,
-    											int id) {
-    									}
-    								});
-    				dialog.show();
-    			}
-    		});
-            final Button blocsshow = new Button(mActivity);
-        	blocsshow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
-        	blocsshow.setText("Show Position");
-            blocsshow.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            blocsshow.setOnClickListener(new OnClickListener(){
+    				adialog = new Dialog(mActivity);
+    				final LinearLayout ll = new LinearLayout(mActivity);
+    				final Button bedit = new Button(mActivity);
+    				bedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bedit.setText("Show Position");
+    	            bedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+    	            bedit.setOnClickListener(new OnClickListener(){
 
-    			@Override
-    			public void onClick(View v) {
-    				String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,name);
-    				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-    				try
-    		        {
-    		            mActivity.startActivity(intent);
-    		        }
-    		        catch(ActivityNotFoundException ex)
-    		        {
-    		            try
-    		            {
-    		                Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-    		                mActivity.startActivity(unrestrictedIntent);
-    		            }
-    		            catch(ActivityNotFoundException innerEx)
-    		            {
-    		                Toast.makeText(mActivity, "Please install a maps application", Toast.LENGTH_LONG).show();
-    		            }
-    		        }
+						@Override
+						public void onClick(View v) {
+							String uri = String.format(Locale.ENGLISH,"geo:%s,%s?q=%s,%s(%s)", lati, longi,lati,longi,name);
+							Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+							try
+							{
+							mActivity.startActivity(intent);
+							adialog.cancel();
+							}
+							catch(ActivityNotFoundException ex)
+							{
+							try
+							{
+							Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+							mActivity.startActivity(unrestrictedIntent);
+							adialog.cancel();
+							}
+							catch(ActivityNotFoundException innerEx)
+							{
+							Toast.makeText(mActivity, "Please install a maps application", Toast.LENGTH_LONG).show();
+							adialog.cancel();
+							}
+							adialog.cancel();
+							}
+							
+						}
+    	            	
+    	            });
+    	            final Button bdelete = new Button(mActivity);
+    				bdelete.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bdelete.setText("Delete");
+    	            bdelete.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+    	            bdelete.setOnClickListener(new OnClickListener(){
+
+						@Override
+						public void onClick(View v) {
+							if (db.exists_location(String.valueOf(blocs.getText())) != 0) {
+								if(db.remove_Location(String.valueOf(blocs.getText()))){
+									Toast.makeText(mActivity, String.valueOf(blocs.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
+									adialog.cancel();
+									PVF_R.refresh();
+								}else{
+									Toast.makeText(mActivity, "Error , "+ String.valueOf(blocs.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
+									adialog.cancel();
+								}
+							}else{
+								adialog.cancel();
+								Toast.makeText(mActivity, String.valueOf(blocs.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
+							}
+							adialog.cancel();
+						}
+    	            	
+    	            });
+    				ll.addView(bdelete);
+    	            ll.addView(bedit);
+    	            dialog.setView(ll);
+    				dialog.setMessage("What to do ?"); 
+    				adialog = dialog.show();
     			}
-    			
     		});
+            final TextView tvdistance = new TextView(mActivity);
+            tvdistance.setId(x);
+            Coordinates cord = new Coordinates(mActivity);
+            double distance = cord.get_distance(lati,longi);
+            tvdistance.setText(String.valueOf(distance));
+            tvdistance.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvdistance.setGravity(Gravity.CENTER);
+            tvdistance.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
             blocs.setGravity(Gravity.CENTER);
             trposis.addView(blocs);
-            blocsshow.setGravity(Gravity.CENTER);
-            trposis.addView(blocsshow);
+            trposis.addView(tvdistance);
             trposis.setGravity(Gravity.CENTER);
             tl.addView(trposis);
+            names[x] = (String) blocs.getText();
+            tvdistancearray[x] = tvdistance;
             
        }
         fl.addView(tl);
+        set_distance_views(names,tvdistancearray);
+        
 	}
 
 	
+	private void set_distance_views(String[] names, TextView[] tvda) {
+		this.acoord = standard.get_ActualCoords();
+		acoord.set_positions_views(names,tvda);
+	}
+
+
 	public void set_rootview(View v){
 		this.rootview = v;
 	}

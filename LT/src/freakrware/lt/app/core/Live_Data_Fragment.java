@@ -161,14 +161,9 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		vaccuracy = (TextView) v.findViewById(R.id.TVAccuracyvalue);
 		vprovider = (TextView) v.findViewById(R.id.TVProvidervalue);
 		vtime = (TextView) v.findViewById(R.id.TVTimevalue);
-		acoord = new ActualCoords(vlongitude,vlatitude,vaccuracy,vtime,vprovider,standard.ccoords,mActivity);
-		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-		Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
-		for(int x = 0;x < threadArray.length;x++){
-			if(threadArray[x].getName().equals("Location Update - Thread")){
-				threadArray[x].interrupt();
-				}
-		}
+		acoord = new ActualCoords(db,vlongitude,vlatitude,vaccuracy,vtime,vprovider,standard.ccoords,mActivity);
+		standard.set_ActualCoords(acoord);
+		
 		Thread t = new Thread(acoord);
 		t.setDaemon(true);
 		t.start();

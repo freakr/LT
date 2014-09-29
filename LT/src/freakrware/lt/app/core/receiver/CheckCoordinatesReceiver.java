@@ -3,15 +3,14 @@ package freakrware.lt.app.core.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
+import freakrware.lt.app.core.util.Coordinates;
 
 public class CheckCoordinatesReceiver extends BroadcastReceiver{
 
-	private Location loc;
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		//loc = new Coordinates(context).get_location;
-				
+		Coordinates cord = new Coordinates(context);
+		cord.checkdistances();
 	}
 
 }

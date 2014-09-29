@@ -9,6 +9,7 @@ import android.location.Location;
 import android.text.format.DateFormat;
 import android.widget.TextView;
 import freakrware.lt.app.core.util.Coordinates;
+import freakrware.lt.app.core.util.DataBase;
 import freakrware.lt.app.resources.Interfaces;
 
 public class ActualCoords implements Runnable,Interfaces{
@@ -21,8 +22,11 @@ public class ActualCoords implements Runnable,Interfaces{
 	private TextView vaccuracy;
 	private TextView vprovider;
 	private TextView vtime;
+	private TextView[] v;
+	private DataBase db;
+	private String[] names;
 	
-	public ActualCoords(TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vtime, TextView vprovider, Coordinates ccoords, Activity mActivity) {
+	public ActualCoords(DataBase db,TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vtime, TextView vprovider, Coordinates ccoords, Activity mActivity) {
 		this.ccoords = ccoords;
 		this.mActivity = mActivity;
 		this.vlongitude = vlongitude;
@@ -30,8 +34,12 @@ public class ActualCoords implements Runnable,Interfaces{
 		this.vaccuracy = vaccuracy;
 		this.vprovider = vprovider;
 		this.vtime = vtime;
+		this.db = db;
 	}
-	
+	public void set_positions_views(String[] names,TextView[] v){
+		this.names = names;
+		this.v = v;
+	}
 	public Location get_actual_coords(){
 		return ccoords.get_location();
 	}
@@ -51,6 +59,23 @@ public class ActualCoords implements Runnable,Interfaces{
 	        		vaccuracy.setText(String.valueOf(get_actual_coords().getAccuracy())+" m");
 	        		vtime.setText(time);
 	        		vprovider.setText(provider.toUpperCase());
+	        		if(v!=null){
+	        			for(int x = 0;x < v.length;x++){
+	        				String name = names[x];
+	        				String[] locationdata = db.get_locations_data(db.exists_location(name));
+	        				String lati = locationdata[0];
+	        				String longi = locationdata[1];
+	        				int distance = (int) ccoords.get_distance(lati, longi);
+	        				if(distance < 1000){
+	        					v[x].setText(String.valueOf(distance)+" m");
+	        				}else{
+	        					distance = distance / 1000;
+	        					v[x].setText(String.valueOf(distance)+" km");
+	        				}
+	        				
+							
+	        			}
+	        		}
 	        	}
 		    });
 		

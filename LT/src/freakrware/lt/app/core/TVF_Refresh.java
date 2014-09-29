@@ -148,18 +148,6 @@ public class TVF_Refresh implements Interfaces{
     	            ll.addView(bedit);
     	            dialog.setView(ll);
     				dialog.setMessage("What to do ?"); 
-    						//.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-    							//		@Override
-    								//	public void onClick(DialogInterface dialog,
-    								//			int id) {
-    									//}
-    								//})
-    						//.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
-    							//		@Override
-    								//	public void onClick(DialogInterface dialog,
-    									//		int id) {
-    									//}
-    								//});
     				adialog = dialog.show();
     			}
     		});

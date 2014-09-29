@@ -16,8 +16,10 @@ public class Coordinates {
 	private Location loc;
 	private Location gpsloc;
 	private Location networkloc;
-	
+	private static final double cellrange = 2500;
+	private DataBase db = new DataBase();
 	boolean gpsstatus ;
+	
 	public LocationListener gpsListener= new LocationListener() {
         public void onLocationChanged(Location location) {
             // Each time the location is changed we assign loc
@@ -73,6 +75,27 @@ public class Coordinates {
 			loc = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 		}
 		return loc;
+		
+	}
+	public double get_distance(String lati, String longi) {
+		Location aloc = get_location();
+		Location dloc = new Location(aloc);
+		dloc.setLatitude(Double.parseDouble(lati));
+		dloc.setLongitude(Double.parseDouble(longi));
+		return aloc.distanceTo(dloc);
+	}
+	public void checkdistances() {
+		String[] locations = db.get_locations();
+		for(int x = 0;x < locations.length;x++){
+			String[] locationsdata = db.get_locations_data(db.exists_location(locations[x]));
+			double distance = get_distance(locationsdata[0], locationsdata[1]);
+			if(distance < Double.parseDouble(locationsdata[2])){
+				new CheckTask(locations[x],CheckTask.WIFI_ACCURACY);
+			}
+			if(distance < cellrange){
+				new CheckTask(locations[x],CheckTask.CELL_ACCURACY);
+			}
+		}
 		
 	}
 }
