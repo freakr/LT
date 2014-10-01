@@ -1,5 +1,7 @@
 package freakrware.lt.app.core;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -25,6 +27,7 @@ public class ActualCoords implements Runnable,Interfaces{
 	private TextView[] v;
 	private DataBase db;
 	private String[] names;
+	public static final DecimalFormat df = new DecimalFormat( "#.00" );
 	
 	public ActualCoords(DataBase db,TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vtime, TextView vprovider, Coordinates ccoords, Activity mActivity) {
 		this.ccoords = ccoords;
@@ -56,7 +59,7 @@ public class ActualCoords implements Runnable,Interfaces{
 		        	String provider = String.valueOf(get_actual_coords().getProvider());
 		        	vlongitude.setText(String.valueOf(get_actual_coords().getLongitude()));
 	        		vlatitude.setText(String.valueOf(get_actual_coords().getLatitude()));
-	        		vaccuracy.setText(String.valueOf(get_actual_coords().getAccuracy())+" m");
+	        		vaccuracy.setText(df.format(get_actual_coords().getAccuracy())+" m");
 	        		vtime.setText(time);
 	        		vprovider.setText(provider.toUpperCase());
 	        		if(v!=null){
@@ -67,11 +70,9 @@ public class ActualCoords implements Runnable,Interfaces{
 	        				String longi = locationdata[1];
 	        				int distance = (int) ccoords.get_distance(lati, longi);
 	        				if(distance < 1000){
-	        					v[x].setText(String.valueOf(distance)+"  m");
+	        					v[x].setText(df.format(distance)+"  m");
 	        				}else{
-	        					float distancefloat = (float) (Math.round(distance) / 1000.0);
-	        					String twodezi = String.valueOf(distancefloat);
-	        					v[x].setText(String.valueOf(twodezi)+" km");
+	        					v[x].setText(df.format(distance/1000.0)+" km");
 	        				}
 	        				
 							
