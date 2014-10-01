@@ -1,21 +1,22 @@
-package freakrware.lt.app.resources;
+package freakrware.lt.app.core;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import freakrware.lt.app.core.R;
+import freakrware.lt.app.resources.Interfaces;
 
 public class TEF_Refresh implements Interfaces{
 	
 	private Activity mActivity;
-	private FrameLayout fl;
+	private RelativeLayout fl;
 	private View rootview;
 	private String taskname;
 	
 	public void refresh(){
 		this.mActivity = standard.mActivity;
-		fl = (FrameLayout) rootview.findViewById(R.id.FL);
+		fl = (RelativeLayout) rootview.findViewById(R.id.FL);
 		if(fl.getChildCount() != 0){
 			fl.removeAllViews();
 		}

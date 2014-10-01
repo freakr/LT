@@ -67,10 +67,11 @@ public class ActualCoords implements Runnable,Interfaces{
 	        				String longi = locationdata[1];
 	        				int distance = (int) ccoords.get_distance(lati, longi);
 	        				if(distance < 1000){
-	        					v[x].setText(String.valueOf(distance)+" m");
+	        					v[x].setText(String.valueOf(distance)+"  m");
 	        				}else{
-	        					distance = distance / 1000;
-	        					v[x].setText(String.valueOf(distance)+" km");
+	        					float distancefloat = (float) (Math.round(distance) / 1000.0);
+	        					String twodezi = String.valueOf(distancefloat);
+	        					v[x].setText(String.valueOf(twodezi)+" km");
 	        				}
 	        				
 							

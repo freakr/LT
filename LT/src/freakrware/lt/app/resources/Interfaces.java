@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import freakrware.lt.app.core.Live_Data_Fragment;
 import freakrware.lt.app.core.PVF_Refresh;
 import freakrware.lt.app.core.Positions_View_Fragment;
+import freakrware.lt.app.core.TEF_Refresh;
 import freakrware.lt.app.core.TVF_Refresh;
 import freakrware.lt.app.core.Tasks_View_Fragment;
 import freakrware.lt.app.core.util.DataBase;

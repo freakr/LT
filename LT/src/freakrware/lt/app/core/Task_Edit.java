@@ -24,15 +24,8 @@ public class Task_Edit implements Interfaces{
 		Bundle args = new Bundle();
 		args.putString("Taskname",task);
 		editFragment.setArguments(args);
+		standard.switch_fragments(TVF, editFragment);
 		
-		android.app.FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
-
-		// Replace whatever is in the fragment_container view with this fragment,
-		// and add the transaction to the back stack
-		transaction.replace(R.id.FL, editFragment);
-		transaction.addToBackStack(null);
-
-		// Commit the transaction
-		transaction.commit();
+		
 	}
 }

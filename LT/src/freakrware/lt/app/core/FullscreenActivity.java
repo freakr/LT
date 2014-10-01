@@ -1,5 +1,7 @@
 package freakrware.lt.app.core;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,8 +76,13 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+    	FragmentManager oFragmentManager;
+        ArrayList<Fragment> oPooledFragments;
+
+		public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
+            oFragmentManager=fm;
+            //TODO standard.set_PagerAdapter(oPooledFragments)
         }
 
         @Override
@@ -88,7 +95,17 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
             default : return LDF;
             }
         }
+        @Override
+        public int getItemPosition(Object object) {
 
+            Fragment oFragment=(Fragment)object;
+            oPooledFragments=new ArrayList<>(oFragmentManager.getFragments());
+            if(oPooledFragments.contains(oFragment))
+                return POSITION_NONE;
+            else
+                return POSITION_UNCHANGED;
+            } 
+        
         @Override
         public int getCount() {
             return NUM_PAGES;
