@@ -82,7 +82,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
             oFragmentManager=fm;
-            //TODO standard.set_PagerAdapter(oPooledFragments)
+            //standard.set_PagerAdapter(oPooledFragments);
         }
 
         @Override

@@ -23,7 +23,7 @@ public class Coordinates {
 	public LocationListener gpsListener= new LocationListener() {
         public void onLocationChanged(Location location) {
             // Each time the location is changed we assign loc
-            gpsloc = location;
+            gpsloc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
 
          // Need these even if they do nothing. Can't remember why.
@@ -37,7 +37,7 @@ public class Coordinates {
     public LocationListener networkListener= new LocationListener() {
         public void onLocationChanged(Location location) {
             // Each time the location is changed we assign loc
-            networkloc = location;
+            networkloc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
 
          // Need these even if they do nothing. Can't remember why.
@@ -50,24 +50,29 @@ public class Coordinates {
     };
 	
 	@SuppressLint("NewApi")
-	public Coordinates(Context context){
+	public Coordinates(Context context,int time){
 		this.context = context;
 		
 		locationManager = (LocationManager) this.context.getSystemService(Context.LOCATION_SERVICE);
-	    gpsstatus = check_gps_status();
-	    
-	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, gpsListener);
-	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, networkListener);
+	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time , 2, gpsListener);
+	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, time, 10, networkListener);
 	    
 	}
 	private boolean check_gps_status(){
 		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		
 	}
+	private boolean check_network_status(){
+		return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		
+	}
+	
+	
 	public Location get_location(){
 		if(check_gps_status()){
 			loc = gpsloc;
-	    }else{
+		}
+	    if(check_network_status()){
 	    	loc = networkloc;
 	    }
 		if(loc != null){}

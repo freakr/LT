@@ -80,7 +80,7 @@ public interface Standards_interface {
 			this.mActivity = activity;
 		}
 		public void ini_Ccoords(){
-			this.ccoords = new Coordinates(mActivity);
+			this.ccoords = new Coordinates(mActivity,5000);
 		}
 		public void set_ActualCoords(ActualCoords acoord) {
 			this.acoord = acoord;

@@ -9,7 +9,7 @@ public class CheckCoordinatesReceiver extends BroadcastReceiver{
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Coordinates cord = new Coordinates(context);
+		Coordinates cord = new Coordinates(context,30000);
 		cord.checkdistances();
 	}
 
