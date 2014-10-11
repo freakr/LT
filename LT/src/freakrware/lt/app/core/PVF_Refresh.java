@@ -147,7 +147,7 @@ public class PVF_Refresh implements Interfaces{
     		});
             final TextView tvdistance = new TextView(mActivity);
             tvdistance.setId(x);
-            Coordinates cord = new Coordinates(mActivity,5000);
+            Coordinates cord = standard.ccoords;//new Coordinates(mActivity,5000);
             double distance = cord.get_distance(lati,longi);
             tvdistance.setText(String.valueOf(distance));
             tvdistance.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
