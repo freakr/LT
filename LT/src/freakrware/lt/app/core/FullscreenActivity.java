@@ -75,23 +75,26 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
      */
+    
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    	
     	
 		public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
+            standard.ini_fragmentlist();
+            standard.set_mPagerAdapter(this);
         }
+		@Override
+	    public int getItemPosition(Object object){
+	        return POSITION_NONE;
+	    }
 
-        @Override
+		@Override
         public Fragment getItem(int position) {
-        	switch(position)
-            {
-            case 0: return LDF;
-            case 1: return PVF;
-            case 2: return TVF;
-            default : return LDF;
-            }
+        	return mFragmentList.get(position);
         }
-   @Override
+        
+		@Override
         public int getCount() {
             return NUM_PAGES;
         }

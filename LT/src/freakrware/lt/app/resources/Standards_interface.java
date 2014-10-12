@@ -1,33 +1,45 @@
 package freakrware.lt.app.resources;
 
 import freakrware.lt.app.core.ActualCoords;
-import freakrware.lt.app.core.R;
+import freakrware.lt.app.core.Task_Edit_Fragment;
 import freakrware.lt.app.core.util.Coordinates;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public interface Standards_interface {
+public interface Standards_interface extends Fragment_interface{
 
 	public class Standards{
 		
 		public Activity mActivity;
 		public Coordinates ccoords;
-		private ActualCoords acoord; 
+		private ActualCoords acoord;
+		private FragmentStatePagerAdapter mPagerAdapter;
 		
-		@SuppressLint("NewApi")
-		public void switch_fragments(Fragment ffrom,android.app.Fragment fto){
-			android.app.FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
-
-			transaction.replace(ffrom.getId(), fto);
-			transaction.addToBackStack(null);
-
-			transaction.commit();
+		public void ini_fragmentlist() {
+			mFragmentList.add(LDF);
+			mFragmentList.add(PVF);
+			mFragmentList.add(TVF);
 		}
-
+		public void fragmentswitch(int pos,Fragment switchto) {
+			mFragmentList.set(pos, switchto);
+			mPagerAdapter.notifyDataSetChanged();
+		}
+		public void fragmentswitch_to_new(int pos,String switchto, String task) {
+			switch(switchto){
+			case TEFFRAGMENT:
+				Fragment TEF = new Task_Edit_Fragment();
+				Bundle args = new Bundle();
+				args.putString(TEFFRAGMENT, task);
+				TEF.setArguments(args);
+				mFragmentList.set(pos, TEF);
+				mPagerAdapter.notifyDataSetChanged();
+			}
+		}
 		
 		public boolean is_Wifi_active(){
 			WifiManager wifiManager = (WifiManager) mActivity.getBaseContext().getSystemService(Context.WIFI_SERVICE);
@@ -88,5 +100,14 @@ public interface Standards_interface {
 		public ActualCoords get_ActualCoords() {
 			return acoord;
 		}
+		public void set_mPagerAdapter(FragmentStatePagerAdapter mPagerAdapter) {
+			this.mPagerAdapter = mPagerAdapter;
+			
+		}
+
+
+
+		
+		
 	}
 }

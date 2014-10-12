@@ -117,7 +117,7 @@ public class TVF_Refresh implements Interfaces{
 
 						@Override
 						public void onClick(View v) {
-							new Task_Edit(String.valueOf(btasks.getText()));
+							standard.fragmentswitch_to_new(2,TEFFRAGMENT,String.valueOf(btasks.getText()));
 							adialog.cancel();
 						}
     	            	
