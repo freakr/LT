@@ -22,7 +22,7 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 
     private LocationRequest mLocationRequest;
     private Location loc;
-	private static final double cellrange = 2500;
+	private static final double wifirange = 500;
 	private DataBase db = new DataBase();
 	
 	@SuppressLint("NewApi")
@@ -35,7 +35,7 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 		
 		mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(time); // Update location every second
+        mLocationRequest.setInterval(time); 
         mGoogleApiClient.connect();
 		}
 		
@@ -54,21 +54,58 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 		dloc.setLongitude(Double.parseDouble(longi));
 		return aloc.distanceTo(dloc);
 	}
-	public void checkdistances() {
+	public void is_location_in_range() {
 		String[] locations = db.get_locations();
 		for(int x = 0;x < locations.length;x++){
 			String[] locationsdata = db.get_locations_data(db.exists_location(locations[x]));
 			double distance = get_distance(locationsdata[0], locationsdata[1]);
-			if(distance < Double.parseDouble(locationsdata[2])){
-				new CheckTask(locations[x],CheckTask.WIFI_ACCURACY);
+			if(distance < wifirange){
+				db.edit_task_state_value(db.exists_location(locations[x]), true);
 			}
-			if(distance < cellrange){
-				new CheckTask(locations[x],CheckTask.CELL_ACCURACY);
+			else
+			{
+				db.edit_task_state_value(db.exists_location(locations[x]), false);
+			}
+		}
+		do_tasks_in_range();
+	}
+
+
+	private void do_tasks_in_range() {
+		int[] taskids = db.get_tasks_in_range();
+		for(int x = 0;x < taskids.length;x++)
+		{
+			if(db.get_taskstandards_data(taskids[x], DataBase.DB_COL_12))
+				{
+					if(!standard.is_Wifi_active())
+					{
+						standard.Wifi_enable();
+					}
+				}
+			if(db.get_taskstandards_data(taskids[x], DataBase.DB_COL_14))
+			{
+				if(!standard.is_Sound_active())
+				{
+					standard.Sound_normal();
+				}
+			}
+			if(!db.get_taskstandards_data(taskids[x], DataBase.DB_COL_12))
+			{
+				if(standard.is_Wifi_active())
+				{
+					standard.Wifi_disable();
+				}
+			}
+			if(!db.get_taskstandards_data(taskids[x], DataBase.DB_COL_14))
+			{
+				if(standard.is_Sound_active())
+				{
+					standard.Sound_vibrate();
+				}
 			}
 		}
 		
 	}
-
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
