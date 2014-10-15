@@ -67,7 +67,14 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
             super.onBackPressed();
         } else {
             // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        	if(mPager.getCurrentItem() == 2 && mFragmentList.get(mPager.getCurrentItem()) == standard.TEF){
+        		standard.fragmentswitch(2, TVF);
+        	}
+        	else
+        	{
+        		mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        	}
+            
         }
     }
 

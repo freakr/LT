@@ -69,6 +69,7 @@ public class TVF_Refresh implements Interfaces{
 										String inhalt = input.getText().toString();
 										if (db.exists_task(inhalt) == 0) {
 											db.add_task(inhalt);
+											db.add_taskstandards(db.exists_task(inhalt));
 											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
 											TVF_R.refresh();
 										}else{

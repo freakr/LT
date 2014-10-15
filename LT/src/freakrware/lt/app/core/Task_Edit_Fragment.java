@@ -16,7 +16,9 @@ public class Task_Edit_Fragment extends Fragment implements Interfaces{
         Bundle bundle = getArguments();
         TEF_R.set_rootview(v,(String) bundle.get(TEFFRAGMENT));
         TEF_R.refresh();
+        
 		return v;
 	}
+
 
 }
