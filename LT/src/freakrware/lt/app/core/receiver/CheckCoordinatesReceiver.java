@@ -4,13 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import freakrware.lt.app.core.util.Coordinates;
+import freakrware.lt.app.resources.Interfaces;
 
-public class CheckCoordinatesReceiver extends BroadcastReceiver{
+public class CheckCoordinatesReceiver extends BroadcastReceiver implements Interfaces{
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Coordinates cord = new Coordinates(context,1000);
-		cord.is_location_in_range();
+		standard.set_Context(context);
+		Coordinates cord = new Coordinates(context,30000);
+		cord.set_service_accesss();
+		
 	}
 
 }

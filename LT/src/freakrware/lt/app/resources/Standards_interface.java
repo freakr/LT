@@ -5,14 +5,12 @@ import freakrware.lt.app.core.Task_Edit_Fragment;
 import freakrware.lt.app.core.util.Coordinates;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +27,7 @@ public interface Standards_interface extends Fragment_interface{
 		private ActualCoords acoord;
 		private FragmentStatePagerAdapter mPagerAdapter;
 		public Fragment TEF;
+		private Context context;
 		
 		public void ini_fragmentlist() {
 			mFragmentList.add(LDF);
@@ -54,37 +53,37 @@ public interface Standards_interface extends Fragment_interface{
 		}
 		
 		public boolean is_Wifi_active(){
-			WifiManager wifiManager = (WifiManager) mActivity.getBaseContext().getSystemService(Context.WIFI_SERVICE);
+			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			return wifiManager.isWifiEnabled();
 		}
 		public boolean Wifi_enable(){
-			WifiManager wifiManager = (WifiManager) mActivity.getBaseContext().getSystemService(Context.WIFI_SERVICE);
+			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			return wifiManager.setWifiEnabled(true);
 		}
 		public boolean Wifi_disable(){
-			WifiManager wifiManager = (WifiManager) mActivity.getBaseContext().getSystemService(Context.WIFI_SERVICE);
+			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			return wifiManager.setWifiEnabled(false);
 		}
 		
 		public boolean is_Sound_active(){
-			AudioManager myAudioManager = (AudioManager)mActivity.getSystemService(Context.AUDIO_SERVICE);
+			AudioManager myAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 			int ringermode = myAudioManager.getRingerMode();
-			if(ringermode == AudioManager.RINGER_MODE_NORMAL){
+			if(ringermode == AudioManager.RINGER_MODE_NORMAL || ringermode == AudioManager.RINGER_MODE_SILENT){
 				return true;
 			}else{
 				return false;
 			}
 		}
 		public void Sound_normal(){
-			AudioManager myAudioManager = (AudioManager)mActivity.getSystemService(Context.AUDIO_SERVICE); 
+			AudioManager myAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE); 
 			myAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 		}
 		public void Sound_silent(){
-			AudioManager myAudioManager = (AudioManager)mActivity.getSystemService(Context.AUDIO_SERVICE); 
+			AudioManager myAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE); 
 			myAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
 		}
 		public void Sound_vibrate(){
-			AudioManager myAudioManager = (AudioManager)mActivity.getSystemService(Context.AUDIO_SERVICE); 
+			AudioManager myAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE); 
 			myAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 		}
 		
@@ -102,6 +101,7 @@ public interface Standards_interface extends Fragment_interface{
 		}
 		public void set_Activity(Activity activity){
 			this.mActivity = activity;
+			this.context = this.mActivity.getBaseContext();
 		}
 		public void ini_Ccoords(){
 			this.ccoords = new Coordinates(mActivity,5000);
@@ -156,6 +156,10 @@ public interface Standards_interface extends Fragment_interface{
 			b.setText(text);
 	    	b.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textsize);
 	        return b;
+		}
+		public void set_Context(Context context) {
+			this.context = context;
+			
 		}
 
 }

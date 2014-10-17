@@ -21,7 +21,7 @@ public class Alarm {
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		PendingIntent pi = PendingIntent.getBroadcast(context, 0, i,
 				PendingIntent.FLAG_UPDATE_CURRENT);
-		long interval =DateUtils.MINUTE_IN_MILLIS / 2;
+		long interval =DateUtils.MINUTE_IN_MILLIS ;
 		long firstStart = System.currentTimeMillis()
 				+ (DateUtils.MINUTE_IN_MILLIS * 2);
 		AlarmManager am = (AlarmManager) context

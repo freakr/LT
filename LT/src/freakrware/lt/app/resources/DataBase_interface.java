@@ -14,6 +14,8 @@ public interface DataBase_interface {
 		final static String DB_TABLE_5 = "Taskstandards";
 		final static String DB_TABLE_6 = "Setup";
 		final static String DB_TABLE_7 = "TaskState";
+		final static String DB_TABLE_8 = "LocationState";
+		final static String DB_TABLE_9 = "LocationTasks";
 		// DataBase Columns
 		final static String DB_COL_1 = "LocationId";
 		final static String DB_COL_2 = "LocationName";
@@ -34,6 +36,7 @@ public interface DataBase_interface {
 		final static String DB_COL_17 = "SetupParameterName";
 		final static String DB_COL_18 = "SetupParameterValue";
 		final static String DB_COL_19 = "TaskStatus";
+		final static String DB_COL_20 = "LocationStatus";
 		// DataBase Getter
 		final static String[] GETTER_LOCATION_EXISTS = {DB_COL_1};
 		final static String[] GETTER_TASK_EXISTS = {DB_COL_7};

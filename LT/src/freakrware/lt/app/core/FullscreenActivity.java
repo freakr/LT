@@ -1,7 +1,5 @@
 package freakrware.lt.app.core;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,9 +43,15 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// TODO
+//		db.add_task_to_location(29, 23);
+		// TODO
+	
+		
 		setContentView(R.layout.activity_fullscreen);
 		mActivity=this;
 		standard.set_Activity(mActivity);
+		standard.set_Context(mActivity.getBaseContext());
 		standard.ini_Ccoords();
 		
 
