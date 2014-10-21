@@ -23,7 +23,6 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
     private LocationRequest mLocationRequest;
     private Location loc;
 	private static final double range = 100;
-	private DataBase db = new DataBase();
 	private boolean serviceaccess = false;
 	
 	
@@ -36,7 +35,7 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 	    .build();
 		
 		mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         mLocationRequest.setInterval(time); 
         mGoogleApiClient.connect();
 		}
@@ -142,6 +141,8 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 		{
 			is_location_in_range();
 			serviceaccess = false;
+			LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+			System.exit(0);
 		}
 	}
 
