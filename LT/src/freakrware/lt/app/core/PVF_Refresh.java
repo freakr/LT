@@ -79,11 +79,11 @@ public class PVF_Refresh implements Interfaces{
     				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
     				adialog = new Dialog(mActivity);
     				final LinearLayout ll = new LinearLayout(mActivity);
-    				final Button bedit = new Button(mActivity);
-    				bedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
-    	        	bedit.setText("Show Position");
-    	            bedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-    	            bedit.setOnClickListener(new OnClickListener(){
+    				final Button bshowposition = new Button(mActivity);
+    				bshowposition.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bshowposition.setText("Show Position");
+    	            bshowposition.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+    	            bshowposition.setOnClickListener(new OnClickListener(){
 
 						@Override
 						public void onClick(View v) {
@@ -138,8 +138,22 @@ public class PVF_Refresh implements Interfaces{
 						}
     	            	
     	            });
-    				ll.addView(bdelete);
+    	            final Button bedit = new Button(mActivity);
+    				bedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bedit.setText("Edit");
+    	            bedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+    	            bedit.setOnClickListener(new OnClickListener(){
+
+						@Override
+						public void onClick(View v) {
+							standard.fragmentswitch_to_new(1,LEFFRAGMENT,String.valueOf(blocs.getText()));
+							adialog.cancel();
+						}
+    	            	
+    	            });
     	            ll.addView(bedit);
+    				ll.addView(bdelete);
+    	            ll.addView(bshowposition);
     	            dialog.setView(ll);
     				dialog.setMessage("What to do ?"); 
     				adialog = dialog.show();

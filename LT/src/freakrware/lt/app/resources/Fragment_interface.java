@@ -14,5 +14,6 @@ public interface Fragment_interface {
 	Fragment LDF = new Live_Data_Fragment();
 	ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
 	public static final String TEFFRAGMENT = "TEF";
+	public static final String LEFFRAGMENT = "LEF";
 
 }

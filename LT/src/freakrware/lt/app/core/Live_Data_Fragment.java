@@ -169,11 +169,24 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		vtime = (TextView) v.findViewById(R.id.TVTimevalue);
 		acoord = new ActualCoords(db,vlongitude,vlatitude,vaccuracy,vtime,vprovider,standard.ccoords,mActivity);
 		standard.set_ActualCoords(acoord);
-		
-		Thread t = new Thread(acoord);
-		t.setDaemon(true);
-		t.start();
-		
+		Thread thread = standard.getThread("Location Update - Thread");
+		if(thread != null)
+		{
+			
+			while(thread.isAlive())
+			{
+				thread.interrupt();
+			}
+			Thread t = new Thread(acoord);
+			t.setDaemon(true);
+			t.start();
+		}
+		else
+		{
+			Thread t = new Thread(acoord);
+			t.setDaemon(true);
+			t.start();
+		}
         
 		final View controlsView = v.findViewById(R.id.fullscreen_content_controls);
 		final View contentView = v.findViewById(R.id.fullscreen_content);

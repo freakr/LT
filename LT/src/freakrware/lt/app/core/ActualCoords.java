@@ -50,7 +50,8 @@ public class ActualCoords implements Runnable,Interfaces{
 	@Override
 	public void run() {
 		standard.thread_rename("Location Update");
-		while(!Thread.currentThread().isInterrupted()){
+		Thread thread = Thread.currentThread();
+		while(!thread.isInterrupted()){
 			mActivity.runOnUiThread(new Runnable() {
 		        public void run() {
 		        	SimpleDateFormat tf = new SimpleDateFormat("HH:mm:ss",Locale.GERMAN);
@@ -81,7 +82,7 @@ public class ActualCoords implements Runnable,Interfaces{
 	        	}
 		    });
 		
-		standard.wait(5000);
+		standard.sleep(5000);
 		
 		}
 	}

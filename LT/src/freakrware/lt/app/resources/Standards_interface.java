@@ -1,6 +1,7 @@
 package freakrware.lt.app.resources;
 
 import freakrware.lt.app.core.ActualCoords;
+import freakrware.lt.app.core.Location_Edit_Fragment;
 import freakrware.lt.app.core.Task_Edit_Fragment;
 import freakrware.lt.app.core.util.Coordinates;
 import android.app.Activity;
@@ -27,6 +28,7 @@ public interface Standards_interface extends Fragment_interface{
 		private ActualCoords acoord;
 		private FragmentStatePagerAdapter mPagerAdapter;
 		public Fragment TEF;
+		public Fragment LEF;
 		private Context context;
 		
 		public void ini_fragmentlist() {
@@ -38,17 +40,28 @@ public interface Standards_interface extends Fragment_interface{
 			mFragmentList.set(pos, switchto);
 			mPagerAdapter.notifyDataSetChanged();
 			this.TEF = null;
+			this.LEF = null;
 		}
-		public void fragmentswitch_to_new(int pos,String switchto, String task) {
+		public void fragmentswitch_to_new(int pos,String switchto, String arg1) {
 			switch(switchto){
 			case TEFFRAGMENT:
 				Fragment TEF = new Task_Edit_Fragment();
 				Bundle args = new Bundle();
-				args.putString(TEFFRAGMENT, task);
+				args.putString(TEFFRAGMENT, arg1);
 				TEF.setArguments(args);
 				mFragmentList.set(pos, TEF);
 				mPagerAdapter.notifyDataSetChanged();
 				this.TEF = TEF;
+				break;
+			case LEFFRAGMENT:
+				Fragment LEF = new Location_Edit_Fragment();
+				Bundle args1 = new Bundle();
+				args1.putString(LEFFRAGMENT, arg1);
+				LEF.setArguments(args1);
+				mFragmentList.set(pos, LEF);
+				mPagerAdapter.notifyDataSetChanged();
+				this.LEF = LEF;
+				break;
 			}
 		}
 		
@@ -87,13 +100,40 @@ public interface Standards_interface extends Fragment_interface{
 			myAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 		}
 		
-		public void wait(int time){
+		public void sleep(int time){
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		}
+		public void wait(Thread thread,int time){
+			try {
+				thread.wait(time);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			}
+		
+		public Thread getThread( final String name ) {
+		    if ( name == null )
+		        throw new NullPointerException( "Null name" );
+		    final Thread[] threads = getAllThreads( );
+		    for ( Thread thread : threads )
+		        if ( thread.getName( ).equals( name ) )
+		            return thread;
+		    return null;
+		}
+		
+		public Thread[] getAllThreads( ) {
+		    final ThreadGroup root = Thread.currentThread().getThreadGroup();
+		    Thread[] threads = new Thread[ root.activeCount() ];
+		    root.enumerate( threads, true);
+		    
+		    return threads;
+		   
+		}
+		
 		public void thread_rename(String name){
 			Thread t = Thread.currentThread();
 			t.setName(name + " - Thread");

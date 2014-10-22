@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import android.annotation.SuppressLint;
@@ -196,6 +197,19 @@ public class DataBase implements Interfaces{
 		return get_data(GETTER_TASKS_NAME);
 	}
 	
+	public int get_task_from_location(int locid) {
+		set_strsql("SELECT "+DB_COL_7+" FROM "+DB_TABLE_9+" WHERE "+DB_COL_1+" = "+locid);
+			
+		String[] result = get_data(GETTER_TASK_EXISTS);
+		for(int i=0; i< result.length;)
+		{
+				return Integer.parseInt(result[i]);
+		}
+				 
+		return 0;
+		
+	}
+	
 	public int[] get_tasks_from_location(int locid) {
 		set_strsql("SELECT "+DB_COL_7+" FROM "+DB_TABLE_9+" WHERE "+DB_COL_1+" = "+locid);
 			
@@ -203,9 +217,9 @@ public class DataBase implements Interfaces{
 		int[] iresult = new int[result.length];
 		for(int i=0; i< result.length;i++)
 		{
-				iresult[i] = Integer.parseInt(result[i]);
+			 iresult[i] = Integer.parseInt(result[i]);
 		}
-				 
+			 
 		return iresult;
 		
 	}
@@ -482,23 +496,42 @@ public class DataBase implements Interfaces{
 	    });
 	}
 
+	public boolean remove_Task_from_Location(int locationid){
+		set_strsql("DELETE FROM "+DB_TABLE_9+" WHERE "+DB_COL_1+" = "+ locationid); 
+				
+		return set_data();
+	}
+
+	public boolean exists_location_task(int locationid,int taskid){
+		set_strsql("SELECT "+DB_COL_1+" FROM "+DB_TABLE_9+" WHERE "+DB_COL_1+" = "+ locationid+" AND "+DB_COL_7+" = "+ taskid);
+		
+		String[] result = get_data(GETTER_LOCATION_EXISTS);
+		if(result.length > 0)
+		{
+		return true;
+		}
+		return false;
+	}
+
+	public ArrayList<String> get_tasks_arraylist() {
+		set_strsql("SELECT "+DB_COL_8+" FROM "+DB_TABLE_3);
+		ArrayList<String> dataarray = new ArrayList<String>();
+		String[] data = get_data(GETTER_TASKS_NAME);
+		for(int x = 0;x < data.length;x++){
+			dataarray.add(data[x]);
+		}
+		return dataarray;
+	}
+
+	public String get_task(int taskid) {
+		set_strsql("SELECT "+DB_COL_8+" FROM "+DB_TABLE_3+" WHERE "+DB_COL_7+" = "+ taskid);
+		String[] data = get_data(GETTER_TASKS_NAME);
+		for(int x = 0;x<data.length;)
+		{
+			return data[x];
+		}
+		return null;
+	}
 
 
-	
-
-
-
-	
-
-	
-
-
-	
-
-	
-
-	
-
-	
-	
 }

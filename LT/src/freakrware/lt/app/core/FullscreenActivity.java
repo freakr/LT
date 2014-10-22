@@ -76,7 +76,13 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
         	}
         	else
         	{
-        		mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        		if(mPager.getCurrentItem() == 1 && mFragmentList.get(mPager.getCurrentItem()) == standard.LEF){
+            		standard.fragmentswitch(1, PVF);
+            	}
+            	else
+            	{
+            		mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            	}
         	}
             
         }

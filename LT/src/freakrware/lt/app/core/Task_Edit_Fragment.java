@@ -12,7 +12,7 @@ public class Task_Edit_Fragment extends Fragment implements Interfaces{
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_task_edit, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit, container, false);
         Bundle bundle = getArguments();
         TEF_R.set_rootview(v,(String) bundle.get(TEFFRAGMENT));
         TEF_R.refresh();
