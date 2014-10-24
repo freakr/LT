@@ -3,6 +3,8 @@ package freakrware.lt.app.core;
 import java.util.Locale;
 import java.util.Set;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -80,7 +82,6 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     	private TextView vtime ;
     	private Activity mActivity;
     	private ActualCoords acoord;
-    	
     	private Button bsaveposition;
     	private Button bshowposition;
 
@@ -92,7 +93,6 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
         View v = inflater.inflate(R.layout.fragment_live_data, container, false);
         this.mActivity = standard.mActivity;
         
-		
         bsaveposition = (Button) v.findViewById(R.id.bSavePosition);
 		bsaveposition.setOnClickListener(new OnClickListener(){
 

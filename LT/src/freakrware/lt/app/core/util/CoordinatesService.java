@@ -21,7 +21,7 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 	
 	private GoogleApiClient mGoogleApiClient;
 	private Location loc;
-	private static final double range = 100;
+	private static double range = (double) Integer.parseInt(db.get_setup_parameter(db.exists_parameter("RANGE")));
 	
 	
 	@SuppressLint("NewApi")
@@ -49,6 +49,7 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 		return aloc.distanceTo(dloc);
 	}
 	public void is_location_in_range() {
+		range = (double) Integer.parseInt(db.get_setup_parameter(db.exists_parameter("RANGE")));
 		String[] locations = db.get_locations();
 		for(int x = 0;x < locations.length;x++){
 			String[] locationsdata = db.get_locations_data(db.exists_location(locations[x]));
@@ -66,7 +67,7 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 		if(linrange.length != 0 )
 		{
 			String irdone = db.get_setup_parameter(db.exists_parameter("IR_DONE"));
-			if( irdone.equals(String.valueOf(false).toUpperCase()))
+			if( irdone.equals(String.valueOf(false)))
 			{
 				do_tasks_in_range(db.get_tasks_from_location(linrange[0]));
 				db.edit_setup_parameter_value(db.exists_parameter("LAST_LOCATION"), db.get_location(linrange[0]));
@@ -78,9 +79,9 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 		else
 		{
 			String oordone = db.get_setup_parameter(db.exists_parameter("OOR_DONE"));
-			if( oordone.equals(String.valueOf(false).toUpperCase()))
+			if( oordone.equals(String.valueOf(false)))
 			{
-				do_tasks_out_of_range(db.get_setup_parameter(db.exists_parameter("LAST_LOCATION")));
+				do_tasks_out_of_range(db.get_tasks_from_location(db.exists_location(db.get_setup_parameter(db.exists_parameter("LAST_LOCATION")))));
 				db.edit_setup_parameter_value(db.exists_parameter("IR_DONE"),String.valueOf(false));
 				db.edit_setup_parameter_value(db.exists_parameter("OOR_DONE"),String.valueOf(true));
 			}
@@ -149,36 +150,38 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 	public void onLocationChanged(Location location) {
 		loc = location;
 	}
-	private void do_tasks_out_of_range(String taskid) {
-			if(db.get_taskstandards_data(db.exists_task(taskid), DataBase.DB_COL_13))
+	private void do_tasks_out_of_range(int[] taskids) {
+		for(int x = 0;x < taskids.length;x++)
+		{
+			if(db.get_taskstandards_data(taskids[x], DataBase.DB_COL_13))
 			{
 				if(!standard.is_Wifi_active())
 				{
 					standard.Wifi_enable();
 				}
 			}
-			if(db.get_taskstandards_data(db.exists_task(taskid), DataBase.DB_COL_15))
+			if(db.get_taskstandards_data(taskids[x], DataBase.DB_COL_15))
 			{
 				if(!standard.is_Sound_active())
 				{
 					standard.Sound_normal();
 				}
 			}
-			if(!db.get_taskstandards_data(db.exists_task(taskid), DataBase.DB_COL_13))
+			if(!db.get_taskstandards_data(taskids[x], DataBase.DB_COL_13))
 			{
 				if(standard.is_Wifi_active())
 				{
 					standard.Wifi_disable();
 				}
 			}
-			if(!db.get_taskstandards_data(db.exists_task(taskid), DataBase.DB_COL_15))
+			if(!db.get_taskstandards_data(taskids[x], DataBase.DB_COL_15))
 			{
 				if(standard.is_Sound_active())
 				{
 					standard.Sound_vibrate();
 				}
 			}
-		
+		}
 		
 	}
 

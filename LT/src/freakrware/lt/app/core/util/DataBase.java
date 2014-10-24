@@ -298,7 +298,7 @@ public class DataBase implements Interfaces{
 	}
 	
 	public boolean edit_setup_parameter_value(int id,String value){
-		set_strsql("UPDATE "+DB_TABLE_6+" SET "+DB_COL_18+" = "+ value +" WHERE "+DB_COL_16+" = "+id); 
+		set_strsql("UPDATE "+DB_TABLE_6+" SET "+DB_COL_18+" = '"+ value +"' WHERE "+DB_COL_16+" = "+id); 
 		return set_data();
 	}
 	
