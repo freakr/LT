@@ -196,6 +196,19 @@ public class DataBase implements Interfaces{
 		
 		return get_data(GETTER_TASKS_NAME);
 	}
+
+	public String get_location(int id) {
+		set_strsql("SELECT "+DB_COL_2+" FROM "+DB_TABLE_1+" WHERE "+DB_COL_1+"  ="+ id); 
+				
+		
+		String[] result = get_data(GETTER_LOCATIONS_NAME);
+		for(int i=0; i< result.length;)
+		{
+				return result[i];
+		}
+				 
+		return "";
+	}
 	
 	public int get_task_from_location(int locid) {
 		set_strsql("SELECT "+DB_COL_7+" FROM "+DB_TABLE_9+" WHERE "+DB_COL_1+" = "+locid);
@@ -287,6 +300,16 @@ public class DataBase implements Interfaces{
 	public boolean edit_setup_parameter_value(int id,String value){
 		set_strsql("UPDATE "+DB_TABLE_6+" SET "+DB_COL_18+" = "+ value +" WHERE "+DB_COL_16+" = "+id); 
 		return set_data();
+	}
+	
+	public String get_setup_parameter(int setupid) {
+		set_strsql("SELECT "+DB_COL_18+" FROM "+DB_TABLE_6+" WHERE "+DB_COL_16+" = "+ setupid);
+		String[] data = get_data(GETTER_PARAMETER_VALUE);
+		for(int x = 0;x<data.length;)
+		{
+			return data[x];
+		}
+		return null;
 	}
 	
 	public boolean remove_Parameter(String name){
@@ -533,5 +556,7 @@ public class DataBase implements Interfaces{
 		return null;
 	}
 
+
+	
 
 }

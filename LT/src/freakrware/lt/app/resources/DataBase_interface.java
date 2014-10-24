@@ -41,6 +41,7 @@ public interface DataBase_interface {
 		final static String[] GETTER_LOCATION_EXISTS = {DB_COL_1};
 		final static String[] GETTER_TASK_EXISTS = {DB_COL_7};
 		final static String[] GETTER_PARAMETER_EXISTS = {DB_COL_16};
+		final static String[] GETTER_PARAMETER_VALUE = {DB_COL_18};
 		final static String[] GETTER_LOCATIONS_NAME = {DB_COL_2};
 		final static String[] GETTER_TASKS_NAME = {DB_COL_8};
 		final static String[] GETTER_LOCATIONS_DATA = {DB_COL_3,DB_COL_4,DB_COL_5,DB_COL_6};

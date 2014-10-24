@@ -98,40 +98,56 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 
 			@Override
 			public void onClick(View v) {
-				final Location pos = standard.ccoords.get_location();
-				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-				adialog = new Dialog(mActivity);
-				final EditText input = new EditText(mActivity);
-				input.setInputType(InputType.TYPE_CLASS_TEXT);
-				dialog.setView(input);
-				dialog.setMessage("Name for this Position (max. 20 Chars)") 
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
-										String inhalt = input.getText().toString();
-										if(inhalt.length() > 20){
+				int[] linrange = db.get_locations_in_range();
+				if(linrange.length < 1 )
+				{
+					final Location pos = standard.ccoords.get_location();
+					AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+					adialog = new Dialog(mActivity);
+					final EditText input = new EditText(mActivity);
+					input.setInputType(InputType.TYPE_CLASS_TEXT);
+					dialog.setView(input);
+					dialog.setMessage("Name for this Position (max. 10 Chars)") 
+						.setPositiveButton("OK", new DialogInterface.OnClickListener()
+							{
+								@Override
+								public void onClick(DialogInterface dialog,int id) 
+								{
+										
+									String inhalt = input.getText().toString();
+										if(inhalt.length() > 10)
+										{
 											Toast.makeText(mActivity, inhalt+" is to long ,pls take another Name", Toast.LENGTH_LONG).show();
 											adialog.cancel();
 										}
-										if (db.exists_location(inhalt) == 0) {
+										if (db.exists_location(inhalt) == 0) 
+										{
 											db.add_location(inhalt);
 											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
-													pos.getAccuracy(),pos.getProvider());
+												pos.getAccuracy(),pos.getProvider());
 											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
 											PVF_R.refresh();
-										}else{
+										}
+										else
+										{
 											Toast.makeText(mActivity, inhalt+" exists ,pls take another Name", Toast.LENGTH_LONG).show();
 										}
+										
+										
 									}
 								})
 						.setNegativeButton("Cancel", new DialogInterface.OnClickListener() { 
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
-									}
-								});
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+								}
+							});
 				adialog = dialog.show();
+				}
+					else
+				{
+					Toast.makeText(mActivity, "Position is to near to other Position !!", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		bshowposition = (Button) v.findViewById(R.id.bShowPosition);

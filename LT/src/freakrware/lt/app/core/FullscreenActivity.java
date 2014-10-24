@@ -44,7 +44,10 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		super.onCreate(savedInstanceState);
 
 		// TODO
-//		db.add_task_to_location(29, 23);
+//		db.add_setup_parameter("LAST_LOCATION");
+//		db.add_setup_parameter("IR_DONE");
+//		db.edit_setup_parameter_value(db.exists_parameter("IR_DONE"),String.valueOf(false));
+//		db.edit_setup_parameter_value(db.exists_parameter("OOR_DONE"),String.valueOf(false));
 		// TODO
 	
 		
