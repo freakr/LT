@@ -23,8 +23,6 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 	private Location loc;
 	private static double range = (double) Integer.parseInt(db.get_setup_parameter(db.exists_parameter("RANGE")));
 	
-	
-	@SuppressLint("NewApi")
 	public CoordinatesService(Context context,int time){
 		mGoogleApiClient = new GoogleApiClient.Builder(context)
 	    .addApi(LocationServices.API)
