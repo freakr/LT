@@ -35,49 +35,60 @@ public class TEF_Refresh implements Interfaces{
 		}
 		
 		final LinearLayout llmain = standard.newlinlayout(mActivity,LinearLayout.VERTICAL);
-		final LinearLayout llwifiblock = standard.newlinlayout(mActivity,LinearLayout.HORIZONTAL,Color.LTGRAY);
+		final LinearLayout llwifiblock = standard.newlinlayout(mActivity,LinearLayout.HORIZONTAL,Color.WHITE);
 		final LinearLayout llwifibuttons = standard.newlinlayout(mActivity,LinearLayout.VERTICAL,Color.WHITE);
-		final LinearLayout llsoundblock = standard.newlinlayout(mActivity,LinearLayout.HORIZONTAL,Color.LTGRAY);
+		final LinearLayout llsoundblock = standard.newlinlayout(mActivity,LinearLayout.HORIZONTAL,Color.WHITE);
 		final LinearLayout llsoundbuttons = standard.newlinlayout(mActivity,LinearLayout.VERTICAL,Color.WHITE);
         
-		final TextView tvtaskname = standard.newtextview(mActivity,taskname,30,Gravity.CENTER);
+		final TextView tvfragname = standard.newtextview(mActivity,"Set Task-Standards",30,Gravity.CENTER);
+		final TextView tvtaskname = standard.newtextview(mActivity,"from - "+taskname+" - to :",30,Gravity.CENTER);
 		final TextView tvwifi = standard.newtextview(mActivity,"Wifi",20,Color.BLACK,Gravity.CENTER);
 		final TextView tvsound = standard.newtextview(mActivity,"Sound",20,Color.BLACK,Gravity.CENTER);
+		final int colortrue = Color.rgb(0, 255, 0);
+		final int colorfalse = Color.rgb(255, 0, 0);
 		
 		final ToggleButton wifiinrange = standard.newtoggbutt(mActivity,"in Range","in Range ON","in Range OFF",20,Gravity.CENTER);
 		wifiinrange.setChecked(db.get_taskstandards_data(db.exists_task(taskname), DataBase.DB_COL_12));
+		standard.set_Color_ToggleButton(wifiinrange,colortrue,colorfalse);
 		wifiinrange.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				db.edit_taskstandards_value(db.exists_task(taskname), DataBase.DB_COL_12,String.valueOf(arg1));
+				standard.set_Color_ToggleButton(wifiinrange,colortrue,colorfalse);
 			}
 		});
         final ToggleButton wifioutofrange = standard.newtoggbutt(mActivity,"out of Range","out of Range ON","out of Range OFF",20,Gravity.CENTER);
         wifioutofrange.setChecked(db.get_taskstandards_data(db.exists_task(taskname), DataBase.DB_COL_13));
+        standard.set_Color_ToggleButton(wifioutofrange,colortrue,colorfalse);
         wifioutofrange.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				db.edit_taskstandards_value(db.exists_task(taskname), DataBase.DB_COL_13,String.valueOf(arg1));
+				standard.set_Color_ToggleButton(wifioutofrange,colortrue,colorfalse);
 			}
 		});
         final ToggleButton soundinrange = standard.newtoggbutt(mActivity,"in Range","in Range ON","in Range OFF",20,Gravity.CENTER);
         soundinrange.setChecked(db.get_taskstandards_data(db.exists_task(taskname), DataBase.DB_COL_14));
+        standard.set_Color_ToggleButton(soundinrange,colortrue,colorfalse);
         soundinrange.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				db.edit_taskstandards_value(db.exists_task(taskname), DataBase.DB_COL_14,String.valueOf(arg1));
+				standard.set_Color_ToggleButton(soundinrange,colortrue,colorfalse);
 			}
 		});
         final ToggleButton soundoutofrange = standard.newtoggbutt(mActivity,"out of Range","out of Range ON","out of Range OFF",20,Gravity.CENTER);
         soundoutofrange.setChecked(db.get_taskstandards_data(db.exists_task(taskname), DataBase.DB_COL_15));
+        standard.set_Color_ToggleButton(soundoutofrange,colortrue,colorfalse);
         soundoutofrange.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 				db.edit_taskstandards_value(db.exists_task(taskname), DataBase.DB_COL_15,String.valueOf(arg1));
+				standard.set_Color_ToggleButton(soundoutofrange,colortrue,colorfalse);
 			}
 		});
         
@@ -93,18 +104,24 @@ public class TEF_Refresh implements Interfaces{
         
         tvwifi.setLayoutParams(lparam1);
         llwifiblock.addView(tvwifi);
+//        llmain.addView(standard.newdivider_vert(mActivity, 3, Color.BLACK));
         llwifibuttons.setLayoutParams(lparam08);
         llwifiblock.addView(llwifibuttons);
         
         tvsound.setLayoutParams(lparam1);
         llsoundblock.addView(tvsound);
+//        llmain.addView(standard.newdivider_vert(mActivity, 3, Color.BLACK));
         llsoundbuttons.setLayoutParams(lparam08);
         llsoundblock.addView(llsoundbuttons);
         
+        tvfragname.setLayoutParams(lparam1);
+        llmain.addView(tvfragname);
         tvtaskname.setLayoutParams(lparam1);
         llmain.addView(tvtaskname);
+        llmain.addView(standard.newdivider_hor(mActivity, 3, Color.CYAN));
         llwifiblock.setLayoutParams(lparam08);
         llmain.addView(llwifiblock);
+        llmain.addView(standard.newdivider_hor(mActivity, 3, Color.BLACK));
         llsoundblock.setLayoutParams(lparam08);
         llmain.addView(llsoundblock);
         

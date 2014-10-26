@@ -45,10 +45,7 @@ public class TVF_Refresh implements Interfaces{
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         trpositions.addView(tv);
         trpositions.setGravity(Gravity.CENTER);
-        TextView divider = new TextView(mActivity);
-        divider.setBackgroundColor(Color.WHITE);
-        divider.setHeight(3);
-        TableRow trnewtask = new TableRow(mActivity);
+       TableRow trnewtask = new TableRow(mActivity);
     	final Button bnewtask = new Button(mActivity);
     	bnewtask.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
     	bnewtask.setText("New Task");
@@ -88,14 +85,11 @@ public class TVF_Refresh implements Interfaces{
 				dialog.show();
 			}
 		});
-        TextView divider2 = new TextView(mActivity);
-        divider2.setBackgroundColor(Color.WHITE);
-        divider2.setHeight(6);
         trnewtask.addView(bnewtask);
         tl.addView(trpositions);
-        tl.addView(divider);
+        tl.addView(standard.newdivider_hor(mActivity, 3, Color.WHITE));
         tl.addView(trnewtask);
-        tl.addView(divider2);
+        tl.addView(standard.newdivider_hor(mActivity, 6, Color.WHITE));
 		tasks = db.get_tasks();
         for(int x = 0;x < tasks.length;x++){
         	TableRow trposis = new TableRow(mActivity);
@@ -105,11 +99,11 @@ public class TVF_Refresh implements Interfaces{
             btasks.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             btasks.setOnClickListener(new OnClickListener(){
 
-    			
-				@Override
+    			@Override
     			public void onClick( View v) {
     				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
     				adialog = new Dialog(mActivity);
+    				
     				final LinearLayout ll = new LinearLayout(mActivity);
     				final Button bedit = new Button(mActivity);
     				bedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
@@ -129,28 +123,19 @@ public class TVF_Refresh implements Interfaces{
     	        	bdelete.setText("Delete");
     	            bdelete.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
     	            bdelete.setOnClickListener(new OnClickListener(){
-
-						@Override
+    	            	
+    	            	@Override
 						public void onClick(View v) {
-							if (db.exists_task(String.valueOf(btasks.getText())) != 0) {
-								if(db.remove_task(String.valueOf(btasks.getText()))){
-									Toast.makeText(mActivity, String.valueOf(btasks.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
-									adialog.cancel();
-									TVF_R.refresh();
-								}else{
-									Toast.makeText(mActivity, "Error , "+ String.valueOf(btasks.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
-									adialog.cancel();
-								}
-							}else{
-								adialog.cancel();
-								Toast.makeText(mActivity, String.valueOf(btasks.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
-							}
+							
+							sure_delete(btasks);
 							adialog.cancel();
+							
 						}
     	            	
     	            });
-    	            ll.addView(bdelete);
     	            ll.addView(bedit);
+    	            ll.addView(bdelete);
+    	            
     	            dialog.setView(ll);
     				dialog.setMessage("What to do ?"); 
     				adialog = dialog.show();
@@ -173,7 +158,48 @@ public class TVF_Refresh implements Interfaces{
 	public void set_rootview(View v){
 		this.rootview = v;
 	}
-    
+	public void sure_delete(final Button btasks) {
+		
+			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			            switch (which){ 
+			            case DialogInterface.BUTTON_POSITIVE:
+			            	if (db.exists_task(String.valueOf(btasks.getText())) != 0) 
+							{
+								if(db.remove_task(String.valueOf(btasks.getText())))
+								{
+									Toast.makeText(mActivity, String.valueOf(btasks.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
+									adialog.cancel();
+									TVF_R.refresh();
+								}
+								else
+								{
+									Toast.makeText(mActivity, "Error , "+ String.valueOf(btasks.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
+									adialog.cancel();
+								}
+							}
+							else
+							{
+								adialog.cancel();
+							Toast.makeText(mActivity, String.valueOf(btasks.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
+							}
+
+			            	
+			            	dialog.dismiss();
+			                break; 
+			            case DialogInterface.BUTTON_NEGATIVE: 
+
+			            	dialog.dismiss();
+			                break;
+			            }
+			            dialog.dismiss();
+			    }
+			};
+			Dialog dia = standard.Adialog_Delete_Confirmation(mActivity, String.valueOf(btasks.getText()), listener);
+			dia.show();
+			}
+		
 	
 	
 }

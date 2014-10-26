@@ -5,17 +5,26 @@ import freakrware.lt.app.core.Location_Edit_Fragment;
 import freakrware.lt.app.core.Task_Edit_Fragment;
 import freakrware.lt.app.core.util.Coordinates;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.LinearLayout.LayoutParams;
 
 public interface Standards_interface extends Fragment_interface{
     
@@ -30,6 +39,7 @@ public interface Standards_interface extends Fragment_interface{
 		public Fragment TEF;
 		public Fragment LEF;
 		private Context context;
+		private Dialog adialog;
 		
 		public void ini_fragmentlist() {
 			mFragmentList.add(LDF);
@@ -182,11 +192,27 @@ public interface Standards_interface extends Fragment_interface{
 	        tv.setGravity(gravity);
 	        return tv;
 		}
+		
+		public View newdivider_hor(Activity activity, int size, int color) {
+			View divider = new View(activity);
+	        divider.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size));
+	        divider.setBackgroundColor(color);
+			return divider;
+		}
+		
+		public View newdivider_vert(Activity activity, int size, int color) {
+			View divider = new View(activity);
+	        divider.setLayoutParams(new LayoutParams(size,LinearLayout.LayoutParams.MATCH_PARENT ));
+	        divider.setBackgroundColor(color);
+			return divider;
+		}
+		
 		public ToggleButton newtoggbutt(Activity activity, String text,String texton, String textoff, int textsize, int gravity) {
 			ToggleButton tb = new ToggleButton(activity);
 	        tb.setText(text);
 	        tb.setTextOn(texton);
 	        tb.setTextOff(textoff);
+	        tb.setPadding(10, 10, 10, 10);
 	        tb.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textsize);
 	        tb.setGravity(gravity);
 			return tb;
@@ -201,6 +227,32 @@ public interface Standards_interface extends Fragment_interface{
 			this.context = context;
 			
 		}
+		public void set_Color_ToggleButton(ToggleButton tb,int colortrue, int colorfalse) {
+			if(tb.isChecked())
+			{
+				tb.setTextColor(Color.BLACK);
+				tb.setBackgroundColor(colortrue);
+			}
+			else
+			{
+				tb.setTextColor(Color.WHITE);
+				tb.setBackgroundColor(colorfalse);
+			}
+		}
+		public Dialog Adialog_Delete_Confirmation(Activity activity, String item, OnClickListener listener){
+			adialog = new Dialog(activity);
+			AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+			dialog.setMessage("Really Delete -"+item+" ?")
+				.setPositiveButton("OK", listener)
+
+				.setNegativeButton("Cancel", listener)
+				.create();
+			
+			adialog = dialog.show();
+			return adialog;
+		}
+		
+		
 
 }
 }

@@ -1618,8 +1618,9 @@ containing a value of this type.
         public static final int fragment_live_data=0x7f03001a;
         public static final int fragment_positions_list=0x7f03001b;
         public static final int fragment_tasks_list=0x7f03001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
-        public static final int test=0x7f03001e;
+        public static final int spinner_item=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
+        public static final int test=0x7f03001f;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

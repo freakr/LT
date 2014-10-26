@@ -35,11 +35,7 @@ public class DataBase implements Interfaces{
 	public DataBase(){
 		
 		initialise_database();
-//		strsql = "CREATE TABLE "+ DB_TABLE_9 +" ("+ DB_COL_1 +" INTEGER , "+ DB_COL_7 +" INTEGER, "
-//				+ "FOREIGN KEY ("+ DB_COL_1 +") REFERENCES "+ DB_TABLE_1 +" ("+ DB_COL_1 +") on delete cascade, "
-//				+ "FOREIGN KEY ("+ DB_COL_7 +") REFERENCES "+ DB_TABLE_3 +" ("+ DB_COL_7 +") on delete cascade)"; 
-//		edit_database(strsql);
-}
+	}
 
 	public boolean add_taskstandards(int id) {
 		set_strsql("INSERT INTO "+DB_TABLE_5+" ("+DB_COL_7+") VALUES ('"+ id +"')"); 

@@ -121,20 +121,9 @@ public class PVF_Refresh implements Interfaces{
 
 						@Override
 						public void onClick(View v) {
-							if (db.exists_location(String.valueOf(blocs.getText())) != 0) {
-								if(db.remove_Location(String.valueOf(blocs.getText()))){
-									Toast.makeText(mActivity, String.valueOf(blocs.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
-									adialog.cancel();
-									PVF_R.refresh();
-								}else{
-									Toast.makeText(mActivity, "Error , "+ String.valueOf(blocs.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
-									adialog.cancel();
-								}
-							}else{
-								adialog.cancel();
-								Toast.makeText(mActivity, String.valueOf(blocs.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
-							}
+							sure_delete(blocs);
 							adialog.cancel();
+							
 						}
     	            	
     	            });
@@ -194,7 +183,42 @@ public class PVF_Refresh implements Interfaces{
 	public void set_rootview(View v){
 		this.rootview = v;
 	}
-    
+	public void sure_delete(final Button blocs) {
+		
+		DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		            switch (which){ 
+		            case DialogInterface.BUTTON_POSITIVE:
+		            	if (db.exists_location(String.valueOf(blocs.getText())) != 0) {
+							if(db.remove_Location(String.valueOf(blocs.getText()))){
+								Toast.makeText(mActivity, String.valueOf(blocs.getText())+" was deleted !!", Toast.LENGTH_LONG).show();
+								adialog.cancel();
+								PVF_R.refresh();
+							}else{
+								Toast.makeText(mActivity, "Error , "+ String.valueOf(blocs.getText())+" was not deleted !!", Toast.LENGTH_LONG).show();
+								adialog.cancel();
+							}
+						}else{
+							adialog.cancel();
+							Toast.makeText(mActivity, String.valueOf(blocs.getText())+" don't exists !!", Toast.LENGTH_LONG).show();
+						}
+						adialog.cancel();
+
+		            	
+		            	dialog.dismiss();
+		                break; 
+		            case DialogInterface.BUTTON_NEGATIVE: 
+
+		            	dialog.dismiss();
+		                break;
+		            }
+		            dialog.dismiss();
+		    }
+		};
+		Dialog dia = standard.Adialog_Delete_Confirmation(mActivity, String.valueOf(blocs.getText()), listener);
+		dia.show();
+		}
 	
 	
 }

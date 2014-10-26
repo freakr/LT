@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 import freakrware.lt.app.resources.Interfaces;
@@ -23,11 +24,10 @@ public class LEF_Refresh implements Interfaces{
 	private RelativeLayout flmain;
 	private View rootview;
 	private String locationname;
-//	private LayoutParams lparam09 = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, (float) 0.9);
-	private LayoutParams lparam1 = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, (float) 1.0);
-	private LayoutParams lparam08 = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, (float) 0.8);
+    private LayoutParams lparam1 = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, (float) 1.0);
+	private LayoutParams lparam08 = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float) 0.1);
+	private LayoutParams lparam = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, (float) 3.0);
 	
-	@SuppressLint("RtlHardcoded")
 	public void refresh(){
 		this.mActivity = standard.mActivity;
 		flmain = (RelativeLayout) rootview.findViewById(R.id.FL);
@@ -36,13 +36,12 @@ public class LEF_Refresh implements Interfaces{
 		}
 		
 		final LinearLayout llmain = standard.newlinlayout(mActivity,LinearLayout.VERTICAL);
-		final LinearLayout lltasksblock = standard.newlinlayout(mActivity,LinearLayout.HORIZONTAL,Color.LTGRAY);
-		
-        final TextView tvlocationname = standard.newtextview(mActivity,locationname,30,Gravity.CENTER);
+		final TextView tvfragname = standard.newtextview(mActivity,"Location - "+locationname,30,Gravity.CENTER);
+        final TextView tvlocationname = standard.newtextview(mActivity,"Set Task to : ",30,Gravity.CENTER);
 		
         final Spinner taskspinner = new Spinner(mActivity);
         final ArrayList<String> tasklist = db.get_tasks_arraylist();
-		final ArrayAdapter<String> taskadapter = new ArrayAdapter<String>(mActivity,android.R.layout.simple_spinner_item, tasklist);
+		final ArrayAdapter<String> taskadapter = new ArrayAdapter<String>(mActivity,R.layout.spinner_item, tasklist);
         taskspinner.setAdapter(taskadapter);
         int taskid = db.get_task_from_location(db.exists_location(locationname));
         if(taskid != 0)
@@ -73,13 +72,16 @@ public class LEF_Refresh implements Interfaces{
         
         
         
-        taskspinner.setLayoutParams(lparam1);
-        lltasksblock.addView(taskspinner);
-        tvlocationname.setLayoutParams(lparam1);
+        tvfragname.setLayoutParams(lparam08);
+        llmain.addView(tvfragname);
+        tvlocationname.setLayoutParams(lparam08);
         llmain.addView(tvlocationname);
-        lltasksblock.setLayoutParams(lparam08);
-        llmain.addView(lltasksblock);
-        
+        llmain.addView(standard.newdivider_hor(mActivity, 3, Color.WHITE));
+        taskspinner.setLayoutParams(lparam08);
+        llmain.addView(taskspinner);
+        View blankspace = new View(mActivity);
+        blankspace.setLayoutParams(lparam);
+        llmain.addView(blankspace);
         
     	llmain.setLayoutParams(lparam1);
         flmain.addView(llmain);

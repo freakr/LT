@@ -457,8 +457,9 @@ int layout fragment_edit 0x7f030019
 int layout fragment_live_data 0x7f03001a
 int layout fragment_positions_list 0x7f03001b
 int layout fragment_tasks_list 0x7f03001c
-int layout support_simple_spinner_dropdown_item 0x7f03001d
-int layout test 0x7f03001e
+int layout spinner_item 0x7f03001d
+int layout support_simple_spinner_dropdown_item 0x7f03001e
+int layout test 0x7f03001f
 int string abc_action_bar_home_description 0x7f060024
 int string abc_action_bar_up_description 0x7f060025
 int string abc_action_menu_overflow_description 0x7f060026

@@ -44,15 +44,15 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		super.onCreate(savedInstanceState);
 
 		// TODO
-		db.add_setup_parameter("LAST_LOCATION");
-		db.add_setup_parameter("IR_DONE");
-		if(db.exists_parameter("RANGE") == 0)
-			{
-			db.add_setup_parameter("RANGE");
-			db.edit_setup_parameter_value(db.exists_parameter("RANGE"),String.valueOf(100));
-			}
-		db.edit_setup_parameter_value(db.exists_parameter("IR_DONE"),String.valueOf(false));
-		db.edit_setup_parameter_value(db.exists_parameter("OOR_DONE"),String.valueOf(false));
+//		db.add_setup_parameter("LAST_LOCATION");
+//		db.add_setup_parameter("IR_DONE");
+//		if(db.exists_parameter("RANGE") == 0)
+//			{
+//			db.add_setup_parameter("RANGE");
+//			db.edit_setup_parameter_value(db.exists_parameter("RANGE"),String.valueOf(100));
+//			}
+//		db.edit_setup_parameter_value(db.exists_parameter("IR_DONE"),String.valueOf(false));
+//		db.edit_setup_parameter_value(db.exists_parameter("OOR_DONE"),String.valueOf(false));
 		// TODO
 	
 		
@@ -80,11 +80,13 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
         } else {
             // Otherwise, select the previous step.
         	if(mPager.getCurrentItem() == 2 && mFragmentList.get(mPager.getCurrentItem()) == standard.TEF){
+        		TVF_R.refresh();
         		standard.fragmentswitch(2, TVF);
         	}
         	else
         	{
         		if(mPager.getCurrentItem() == 1 && mFragmentList.get(mPager.getCurrentItem()) == standard.LEF){
+        			PVF_R.refresh();
             		standard.fragmentswitch(1, PVF);
             	}
             	else
