@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 import freakrware.lt.app.core.util.SystemUiHider;
 import freakrware.lt.app.resources.Interfaces;
 
@@ -25,6 +28,10 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
      * The number of pages (wizard steps) to show in this demo.
      */
     private static final int NUM_PAGES = 3;
+
+	private static final int SETUP = 1;
+
+	private static final int MENU_QUIT = 2;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -70,6 +77,26 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
         mPager.setOffscreenPageLimit(NUM_PAGES);
 		
     }
+	
+	/* Creates the menu items */
+	public boolean onCreateOptionsMenu(Menu menu) {
+	menu.add(0, SETUP, 0, "Setup");
+	menu.add(0, MENU_QUIT, 0, "Quit");
+	return true;
+	}
+
+	/* Handles item selections */
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case SETUP:
+				Toast.makeText(mActivity, "TODO Setup - Menu",Toast.LENGTH_LONG).show();;
+				return true;
+			case MENU_QUIT:
+				System.exit(0);
+				return true;
+		}
+		return false;
+	} 
 
     @Override
     public void onBackPressed() {
