@@ -22,9 +22,7 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 
     private LocationRequest mLocationRequest;
     private Location loc;
-	private static final double range = 100;
-	private boolean serviceaccess = false;
-	
+   
 	
 	@SuppressLint("NewApi")
 	public Coordinates(Context context,int time){
@@ -39,10 +37,7 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
         mLocationRequest.setInterval(time); 
         mGoogleApiClient.connect();
 		}
-	public void set_service_accesss(){
-		this.serviceaccess = true;
-		
-	}
+	
 	public Location get_location(){
 		
 		if(loc != null){
@@ -58,63 +53,10 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 		dloc.setLongitude(Double.parseDouble(longi));
 		return aloc.distanceTo(dloc);
 	}
-	public void is_location_in_range() {
-		String[] locations = db.get_locations();
-		for(int x = 0;x < locations.length;x++){
-			String[] locationsdata = db.get_locations_data(db.exists_location(locations[x]));
-			double distance = get_distance(locationsdata[0], locationsdata[1]);
-			if(distance < range){
-				db.edit_location_state_value(db.exists_location(locations[x]), true);
-				
-			}
-			else
-			{
-				db.edit_location_state_value(db.exists_location(locations[x]), false);
-			}
-		}
-		int[] linrange = db.get_locations_in_range();
-		for(int y = 0;y < linrange.length;y++){
-			do_tasks_in_range(db.get_tasks_from_location(linrange[y]));
-		}
-		
-		
-	}
+	
 
 
-	private void do_tasks_in_range(int[] taskids) {
-		for(int x = 0;x < taskids.length;x++)
-		{
-			if(db.get_taskstandards_data(taskids[x], DataBase.DB_COL_12))
-				{
-					if(!standard.is_Wifi_active())
-					{
-						standard.Wifi_enable();
-					}
-				}
-			if(db.get_taskstandards_data(taskids[x], DataBase.DB_COL_14))
-			{
-				if(!standard.is_Sound_active())
-				{
-					standard.Sound_normal();
-				}
-			}
-			if(!db.get_taskstandards_data(taskids[x], DataBase.DB_COL_12))
-			{
-				if(standard.is_Wifi_active())
-				{
-					standard.Wifi_disable();
-				}
-			}
-			if(!db.get_taskstandards_data(taskids[x], DataBase.DB_COL_14))
-			{
-				if(standard.is_Sound_active())
-				{
-					standard.Sound_vibrate();
-				}
-			}
-		}
-		
-	}
+	
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
@@ -137,13 +79,7 @@ public class Coordinates implements Interfaces, ConnectionCallbacks,LocationList
 	@Override
 	public void onLocationChanged(Location location) {
 		loc = location;
-		if(serviceaccess)
-		{
-			is_location_in_range();
-			serviceaccess = false;
-			LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-			System.exit(0);
-		}
+		
 	}
 
 
