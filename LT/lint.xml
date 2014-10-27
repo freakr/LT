@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="NewApi">
+        <ignore path="src/freakrware/lt/app/core/SEF_Refresh.java" />
         <ignore path="src/freakrware/lt/app/core/Task_Edit_Fragment.java" />
         <ignore path="src/freakrware/lt/app/core/util/CoordinatesService.java" />
+        <ignore path="src/freakrware/lt/app/resources/SEF_Refresh.java" />
     </issue>
 </lint>

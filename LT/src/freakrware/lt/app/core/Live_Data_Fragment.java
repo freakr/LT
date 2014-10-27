@@ -126,7 +126,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
 												pos.getAccuracy(),pos.getProvider());
 											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
-											PVF_R.refresh();
+											LVF_R.refresh();
 										}
 										else
 										{

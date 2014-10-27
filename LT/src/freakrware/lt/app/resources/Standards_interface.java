@@ -2,6 +2,7 @@ package freakrware.lt.app.resources;
 
 import freakrware.lt.app.core.ActualCoords;
 import freakrware.lt.app.core.Location_Edit_Fragment;
+import freakrware.lt.app.core.Setup_Edit_Fragment;
 import freakrware.lt.app.core.Task_Edit_Fragment;
 import freakrware.lt.app.core.util.Coordinates;
 import android.app.Activity;
@@ -38,12 +39,13 @@ public interface Standards_interface extends Fragment_interface{
 		private FragmentStatePagerAdapter mPagerAdapter;
 		public Fragment TEF;
 		public Fragment LEF;
+		public Fragment SEF;
 		private Context context;
 		private Dialog adialog;
 		
 		public void ini_fragmentlist() {
 			mFragmentList.add(LDF);
-			mFragmentList.add(PVF);
+			mFragmentList.add(LVF);
 			mFragmentList.add(TVF);
 		}
 		public void fragmentswitch(int pos,Fragment switchto) {
@@ -51,6 +53,7 @@ public interface Standards_interface extends Fragment_interface{
 			mPagerAdapter.notifyDataSetChanged();
 			this.TEF = null;
 			this.LEF = null;
+			this.SEF = null;
 		}
 		public void fragmentswitch_to_new(int pos,String switchto, String arg1) {
 			switch(switchto){
@@ -71,6 +74,15 @@ public interface Standards_interface extends Fragment_interface{
 				mFragmentList.set(pos, LEF);
 				mPagerAdapter.notifyDataSetChanged();
 				this.LEF = LEF;
+				break;
+			case SEFFRAGMENT:
+				Fragment SEF = new Setup_Edit_Fragment();
+				Bundle args2 = new Bundle();
+				args2.putString(SEFFRAGMENT, arg1);
+				SEF.setArguments(args2);
+				mFragmentList.set(pos, SEF);
+				mPagerAdapter.notifyDataSetChanged();
+				this.SEF = SEF;
 				break;
 			}
 		}

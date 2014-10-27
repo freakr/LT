@@ -89,7 +89,10 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case SETUP:
-				Toast.makeText(mActivity, "TODO Setup - Menu",Toast.LENGTH_LONG).show();;
+				if(mFragmentList.get(mPager.getCurrentItem()) != standard.SEF)
+				{
+					standard.fragmentswitch_to_new(mPager.getCurrentItem(), SEFFRAGMENT, "Setup");
+				}
 				return true;
 			case MENU_QUIT:
 				System.exit(0);
@@ -100,29 +103,45 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 
     @Override
     public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-        	if(mPager.getCurrentItem() == 2 && mFragmentList.get(mPager.getCurrentItem()) == standard.TEF){
-        		TVF_R.refresh();
-        		standard.fragmentswitch(2, TVF);
-        	}
-        	else
-        	{
-        		if(mPager.getCurrentItem() == 1 && mFragmentList.get(mPager.getCurrentItem()) == standard.LEF){
-        			PVF_R.refresh();
-            		standard.fragmentswitch(1, PVF);
-            	}
-            	else
-            	{
-            		mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-            	}
-        	}
-            
-        }
+    	if(mFragmentList.get(mPager.getCurrentItem()) == standard.SEF)
+    	{
+    		standard.fragmentswitch(0, LDF);
+    		standard.fragmentswitch(1, LVF);
+    		standard.fragmentswitch(2, TVF);
+    	}
+    	else
+    	{
+    		switch(mPager.getCurrentItem())
+    		{
+    			case 0:
+    				// If the user is currently looking at the first step, allow the system to handle the
+    				// Back button. This calls finish() on this activity and pops the back stack.
+    				super.onBackPressed();
+    				break;
+    			case 1:
+    				if(mFragmentList.get(mPager.getCurrentItem()) == standard.LEF)
+    				{
+    					LVF_R.refresh();
+    					standard.fragmentswitch(1, LVF);
+    				}
+    				else
+    				{
+    					mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+    				}
+    				break;
+    			case 2:
+    				if(mFragmentList.get(mPager.getCurrentItem()) == standard.TEF)
+    				{
+    					TVF_R.refresh();
+    					standard.fragmentswitch(2, TVF);
+    				}
+    				else
+    				{
+    					mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+    				}
+    				break;
+    		}
+    	}
     }
 
     /**
