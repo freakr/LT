@@ -40,18 +40,19 @@ public class SEF_Refresh implements Interfaces{
 		
 		final TextView tvfragname = standard.newtextview(mActivity,"Setup",30,red,Gravity.CENTER);
 		final TextView tvpararange = standard.newtextview(mActivity,"Range",20,green,Gravity.CENTER);
-		final TextView tvmeter = standard.newtextview(mActivity,"m",20,green,Gravity.CENTER);
+		final TextView tvmeter = standard.newtextview(mActivity,"m",25,green,Gravity.CENTER);
 
 		
 		String range = db.get_setup_parameter(db.exists_parameter("RANGE"));
 		
 		int values[] = {0,0,0,0}; 
-		
-		for(int x = range.length()-1;x > 0;x--)
+		int vlength = values.length-1;
+		for(int x = range.length();x > 0;x--)
 		{
-			char ch = range.charAt(x);
+			char ch = range.charAt(x-1);
 			String st = String.valueOf(ch);
-			values[x+(values.length-range.length())] = Integer.parseInt(st);
+			values[vlength] = Integer.parseInt(st);
+			vlength -= 1;
 		}
 		
 			
@@ -98,7 +99,11 @@ public class SEF_Refresh implements Interfaces{
 		npicker10.setOnValueChangedListener(onValueChangedListener);
 		npicker1.setOnValueChangedListener(onValueChangedListener);
 		
-		
+		npicker1000.setLayoutParams(lparam);
+		npicker100.setLayoutParams(lparam);
+		npicker10.setLayoutParams(lparam);
+		npicker1.setLayoutParams(lparam);
+		tvmeter.setLayoutParams(lparam);
 		
 		llrangenumberpickers.addView(npicker1000);
 		llrangenumberpickers.addView(npicker100);
