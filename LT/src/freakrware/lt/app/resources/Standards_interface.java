@@ -42,6 +42,8 @@ public interface Standards_interface extends Fragment_interface{
 		public Fragment SEF;
 		private Context context;
 		private Dialog adialog;
+		public String[] names;
+		public TextView[] views;
 		
 		public void ini_fragmentlist() {
 			mFragmentList.add(LDF);
@@ -262,6 +264,11 @@ public interface Standards_interface extends Fragment_interface{
 			
 			adialog = dialog.show();
 			return adialog;
+		}
+		public void set_positions_views(String[] names, TextView[] tvda) {
+			this.names = names;
+			this.views = tvda;
+			
 		}
 		
 		

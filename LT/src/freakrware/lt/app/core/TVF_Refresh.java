@@ -45,7 +45,7 @@ public class TVF_Refresh implements Interfaces{
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         trpositions.addView(tv);
         trpositions.setGravity(Gravity.CENTER);
-       TableRow trnewtask = new TableRow(mActivity);
+        TableRow trnewtask = new TableRow(mActivity);
     	final Button bnewtask = new Button(mActivity);
     	bnewtask.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
     	bnewtask.setText("New Task");

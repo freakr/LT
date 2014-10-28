@@ -78,7 +78,8 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		private TextView vlongitude ;
     	private TextView vlatitude ;
     	private TextView vaccuracy ;
-    	private TextView vprovider ;
+    	private TextView vnposition ;
+    	private TextView vdistance;
     	private TextView vtime ;
     	private Activity mActivity;
     	private ActualCoords acoord;
@@ -86,6 +87,8 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     	private Button bshowposition;
 
 		protected Dialog adialog;
+
+		
 	
 
     @Override
@@ -125,6 +128,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 											db.add_location(inhalt);
 											db.add_location_position(db.exists_location(inhalt), pos.getLatitude(), pos.getLongitude(),
 												pos.getAccuracy(),pos.getProvider());
+											db.add_Locationstate(db.exists_location(inhalt));
 											Toast.makeText(mActivity, inhalt+" was added", Toast.LENGTH_LONG).show();
 											LVF_R.refresh();
 										}
@@ -181,9 +185,10 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		vlongitude = (TextView) v.findViewById(R.id.TVLongitudevalue);
 		vlatitude = (TextView) v.findViewById(R.id.TVLatitudevalue);
 		vaccuracy = (TextView) v.findViewById(R.id.TVAccuracyvalue);
-		vprovider = (TextView) v.findViewById(R.id.TVProvidervalue);
+		vnposition = (TextView) v.findViewById(R.id.TVNPValue);
+		vdistance = (TextView) v.findViewById(R.id.TVNPDistanceValue);
 		vtime = (TextView) v.findViewById(R.id.TVTimevalue);
-		acoord = new ActualCoords(db,vlongitude,vlatitude,vaccuracy,vtime,vprovider,standard.ccoords,mActivity);
+		acoord = new ActualCoords(db,vlongitude,vlatitude,vaccuracy,vtime,vnposition,vdistance,standard.ccoords,mActivity);
 		standard.set_ActualCoords(acoord);
 		Thread thread = standard.getThread("Location Update - Thread");
 		if(thread != null)

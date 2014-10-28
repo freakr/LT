@@ -35,7 +35,6 @@ public class LVF_Refresh implements Interfaces{
 	private String[] locsshow;
 	protected Dialog adialog;
 	private TextView[] tvdistancearray;
-	private ActualCoords acoord;
 	private String[] names;
 	
 	public void refresh(){
@@ -175,8 +174,7 @@ public class LVF_Refresh implements Interfaces{
 
 	
 	private void set_distance_views(String[] names, TextView[] tvda) {
-		this.acoord = standard.get_ActualCoords();
-		acoord.set_positions_views(names,tvda);
+		standard.set_positions_views(names,tvda);
 	}
 
 

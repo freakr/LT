@@ -552,6 +552,30 @@ public class DataBase implements Interfaces{
 		return null;
 	}
 
+	public String get_nearest_Location() {
+		
+		String[] locations = get_locations();
+		double[] distances = new double[locations.length];
+		for(int x = 0;x < locations.length;x++)
+		{
+			String[] locationdata = get_locations_data(exists_location(locations[x]));
+			String lati = locationdata[0];
+			String longi = locationdata[1];
+			distances[x] = standard.ccoords.get_distance(lati, longi);
+		}
+		int id = 0;
+		double ndist = distances[0];
+		for(int y = 0;y < distances.length;y++)
+		{
+			if(distances[y] < ndist)
+			{
+				id = y;
+				ndist = distances[y];
+			}
+		}
+		return locations[id];
+	}
+
 
 	
 
