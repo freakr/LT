@@ -1,9 +1,13 @@
 package freakrware.lt.app.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import freakrware.lt.app.core.ActualCoords;
 import freakrware.lt.app.core.Location_Edit_Fragment;
 import freakrware.lt.app.core.Setup_Edit_Fragment;
-import freakrware.lt.app.core.Task_Edit_Fragment;
+import freakrware.lt.app.core.Task_Edit_P_Fragment;
+import freakrware.lt.app.core.Task_Edit_S_Fragment;
 import freakrware.lt.app.core.util.Coordinates;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +16,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -29,7 +36,14 @@ import android.widget.LinearLayout.LayoutParams;
 
 public interface Standards_interface extends Fragment_interface{
     
-	
+	/* This class is for storing the data for each application */
+	public class PackageInfoStruct {
+	    public String appname = "";
+	    public String pname = "";
+	    public String versionName = "";
+	    public int versionCode = 0;
+	    public Drawable icon;
+	}
 	
 	public class Standards{
 		
@@ -37,13 +51,56 @@ public interface Standards_interface extends Fragment_interface{
 		public Coordinates ccoords;
 		private ActualCoords acoord;
 		private FragmentStatePagerAdapter mPagerAdapter;
-		public Fragment TEF;
+		public Fragment TEFS;
+		public Fragment TEFP;
 		public Fragment LEF;
 		public Fragment SEF;
 		private Context context;
 		private Dialog adialog;
 		public String[] names;
 		public TextView[] views;
+		private String[] app_labels;
+		
+		
+		public ArrayList<PackageInfoStruct> getPackages() {
+	        ArrayList<PackageInfoStruct> apps = getInstalledApps(false);
+	        final int max = apps.size();
+	        for (int i=0; i < max; i++) {
+	            apps.get(i);
+	        }
+	        return apps;
+	    }
+		
+		private ArrayList<PackageInfoStruct> getInstalledApps(boolean getSysPackages) {
+			ArrayList<PackageInfoStruct> res = new ArrayList<PackageInfoStruct>();
+	        List<PackageInfo> packs = mActivity.getPackageManager().getInstalledPackages(0);
+	        try{
+	            app_labels = new String[packs.size()];
+	        }catch(Exception e){
+	            Toast.makeText(mActivity.getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+	        }
+	        for(int i=0;i < packs.size();i++) {
+	            PackageInfo p = packs.get(i);
+	            if ((packs.get(i).applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1)
+	            { 
+	            	continue;
+	            }
+//	            if ((!getSysPackages) && (p.versionName == null)) {
+//	                continue ;
+//	            }
+	            PackageInfoStruct newInfo = new PackageInfoStruct();
+	            newInfo.appname = p.applicationInfo.loadLabel(mActivity.getPackageManager()).toString();
+	            newInfo.pname = p.packageName;
+	            newInfo.versionName = p.versionName;
+	            newInfo.versionCode = p.versionCode;
+	            newInfo.icon = p.applicationInfo.loadIcon(mActivity.getPackageManager());
+	            res.add(newInfo);
+
+	            app_labels[i] = newInfo.appname;
+	        }
+	        return res;
+	    }
+		
 		
 		public void ini_fragmentlist() {
 			mFragmentList.add(LDF);
@@ -53,20 +110,30 @@ public interface Standards_interface extends Fragment_interface{
 		public void fragmentswitch(int pos,Fragment switchto) {
 			mFragmentList.set(pos, switchto);
 			mPagerAdapter.notifyDataSetChanged();
-			this.TEF = null;
+			this.TEFS = null;
+			this.TEFP = null;
 			this.LEF = null;
 			this.SEF = null;
 		}
 		public void fragmentswitch_to_new(int pos,String switchto, String arg1) {
 			switch(switchto){
-			case TEFFRAGMENT:
-				Fragment TEF = new Task_Edit_Fragment();
+			case TEFSFRAGMENT:
+				Fragment TEFS = new Task_Edit_S_Fragment();
 				Bundle args = new Bundle();
-				args.putString(TEFFRAGMENT, arg1);
-				TEF.setArguments(args);
-				mFragmentList.set(pos, TEF);
+				args.putString(TEFSFRAGMENT, arg1);
+				TEFS.setArguments(args);
+				mFragmentList.set(pos, TEFS);
 				mPagerAdapter.notifyDataSetChanged();
-				this.TEF = TEF;
+				this.TEFS = TEFS;
+				break;
+			case TEFPFRAGMENT:
+				Fragment TEFP = new Task_Edit_P_Fragment();
+				Bundle args3 = new Bundle();
+				args3.putString(TEFPFRAGMENT, arg1);
+				TEFP.setArguments(args3);
+				mFragmentList.set(pos, TEFP);
+				mPagerAdapter.notifyDataSetChanged();
+				this.TEFP = TEFP;
 				break;
 			case LEFFRAGMENT:
 				Fragment LEF = new Location_Edit_Fragment();

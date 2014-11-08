@@ -105,15 +105,28 @@ public class TVF_Refresh implements Interfaces{
     				adialog = new Dialog(mActivity);
     				
     				final LinearLayout ll = new LinearLayout(mActivity);
-    				final Button bedit = new Button(mActivity);
-    				bedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
-    	        	bedit.setText("Edit");
-    	            bedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-    	            bedit.setOnClickListener(new OnClickListener(){
+    				final Button bTSedit = new Button(mActivity);
+    				bTSedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bTSedit.setText("Edit Standards");
+    	            bTSedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+    	            bTSedit.setOnClickListener(new OnClickListener(){
 
 						@Override
 						public void onClick(View v) {
-							standard.fragmentswitch_to_new(2,TEFFRAGMENT,String.valueOf(btasks.getText()));
+							standard.fragmentswitch_to_new(2,TEFSFRAGMENT,String.valueOf(btasks.getText()));
+							adialog.cancel();
+						}
+    	            	
+    	            });
+    	            final Button bTPedit = new Button(mActivity);
+    				bTPedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
+    	        	bTPedit.setText("Edit Programms");
+    	            bTPedit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+    	            bTPedit.setOnClickListener(new OnClickListener(){
+
+						@Override
+						public void onClick(View v) {
+							standard.fragmentswitch_to_new(2,TEFPFRAGMENT,String.valueOf(btasks.getText()));
 							adialog.cancel();
 						}
     	            	
@@ -133,7 +146,8 @@ public class TVF_Refresh implements Interfaces{
 						}
     	            	
     	            });
-    	            ll.addView(bedit);
+    	            ll.addView(bTSedit);
+    	            ll.addView(bTPedit);
     	            ll.addView(bdelete);
     	            
     	            dialog.setView(ll);

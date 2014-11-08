@@ -13,7 +13,8 @@ public interface Fragment_interface {
 	Fragment TVF = new Tasks_View_Fragment();
 	Fragment LDF = new Live_Data_Fragment();
 	ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
-	public static final String TEFFRAGMENT = "TEF";
+	public static final String TEFSFRAGMENT = "TEFS";
+	public static final String TEFPFRAGMENT = "TEFP";
 	public static final String LEFFRAGMENT = "LEF";
 	public static final String SEFFRAGMENT = "SEF";
 

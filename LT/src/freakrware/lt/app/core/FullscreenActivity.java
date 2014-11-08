@@ -130,7 +130,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
     				}
     				break;
     			case 2:
-    				if(mFragmentList.get(mPager.getCurrentItem()) == standard.TEF)
+    				if(mFragmentList.get(mPager.getCurrentItem()) == standard.TEFS || mFragmentList.get(mPager.getCurrentItem()) == standard.TEFP)
     				{
     					TVF_R.refresh();
     					standard.fragmentswitch(2, TVF);
