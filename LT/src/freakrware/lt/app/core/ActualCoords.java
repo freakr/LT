@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.location.Location;
 import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.widget.TextView;
 import freakrware.lt.app.core.util.Coordinates;
 import freakrware.lt.app.core.util.DataBase;
@@ -29,9 +30,10 @@ public class ActualCoords implements Runnable,Interfaces{
 	private DataBase db;
 	private String[] names;
 	private TextView vdistance;
+	private TextView vlupdate;
 	public static final DecimalFormat df = new DecimalFormat( "#.00" );
 	
-	public ActualCoords(DataBase db,TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vtime, TextView vnposition, TextView vdistance, Coordinates ccoords, Activity mActivity) {
+	public ActualCoords(DataBase db,TextView vlongitude, TextView vlatitude, TextView vaccuracy, TextView vtime, TextView vnposition, TextView vdistance, Coordinates ccoords, Activity mActivity, TextView vlupdate) {
 		this.ccoords = ccoords;
 		this.mActivity = mActivity;
 		this.vlongitude = vlongitude;
@@ -40,6 +42,7 @@ public class ActualCoords implements Runnable,Interfaces{
 		this.vnposition = vnposition;
 		this.vdistance = vdistance;
 		this.vtime = vtime;
+		this.vlupdate = vlupdate;
 		this.db = db;
 	}
 	public void get_positions_views(){
@@ -66,6 +69,10 @@ public class ActualCoords implements Runnable,Interfaces{
 	        		vaccuracy.setText(df.format(get_actual_coords().getAccuracy())+" m");
 	        		vtime.setText(time);
 	        		vnposition.setText(db.get_nearest_Location());
+	        		String LAT = db.get_setup_parameter(db.exists_parameter("LAST_ACTION_TIME")); // Sun Nov 09 19:58:37 MEZ 2014
+	        		long latime = (DateUtils.MINUTE_IN_MILLIS)+Long.parseLong(LAT);
+	        		LAT = tf.format((latime - new Date().getTime())-DateUtils.HOUR_IN_MILLIS);
+	        		vlupdate.setText(LAT);
 	        		String[] ldata = db.get_locations_data(db.exists_location(db.get_nearest_Location()));
     				String lat = ldata[0];
     				String lon = ldata[1];

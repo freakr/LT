@@ -81,12 +81,15 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
     	private TextView vnposition ;
     	private TextView vdistance;
     	private TextView vtime ;
+    	private TextView vlupdate;
     	private Activity mActivity;
     	private ActualCoords acoord;
     	private Button bsaveposition;
     	private Button bshowposition;
 
 		protected Dialog adialog;
+
+		
 
 		
 	
@@ -188,7 +191,8 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 		vnposition = (TextView) v.findViewById(R.id.TVNPValue);
 		vdistance = (TextView) v.findViewById(R.id.TVNPDistanceValue);
 		vtime = (TextView) v.findViewById(R.id.TVTimevalue);
-		acoord = new ActualCoords(db,vlongitude,vlatitude,vaccuracy,vtime,vnposition,vdistance,standard.ccoords,mActivity);
+		vlupdate = (TextView) v.findViewById(R.id.TVLUpdateValue);
+		acoord = new ActualCoords(db,vlongitude,vlatitude,vaccuracy,vtime,vnposition,vdistance,standard.ccoords,mActivity, vlupdate);
 		standard.set_ActualCoords(acoord);
 		Thread thread = standard.getThread("Location Update - Thread");
 		if(thread != null)

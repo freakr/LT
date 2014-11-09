@@ -1,16 +1,16 @@
 package freakrware.lt.app.core.util;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,7 +18,6 @@ import android.location.Location;
 import android.os.Bundle;
 
 
-import android.os.Looper;
 import freakrware.lt.app.resources.Interfaces;
 
 public class CoordinatesService implements Interfaces, ConnectionCallbacks,LocationListener, OnConnectionFailedListener{
@@ -163,6 +162,8 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 	@Override
 	public void onConnected(Bundle arg0) {
 		loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+		String time = String.valueOf(new Date().getTime());
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_ACTION_TIME"),time);
 		is_location_in_range();
 		mGoogleApiClient.disconnect();
 	}

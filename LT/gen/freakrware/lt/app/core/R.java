@@ -1463,10 +1463,12 @@ containing a value of this type.
     }
     public static final class id {
         public static final int FL=0x7f08004f;
-        public static final int FrameLayout1=0x7f080062;
+        public static final int FrameLayout1=0x7f080064;
         public static final int TVAccuracy=0x7f080056;
         public static final int TVAccuracyvalue=0x7f080057;
-        public static final int TVDummy1=0x7f08005e;
+        public static final int TVDummy1=0x7f080060;
+        public static final int TVLUpdate=0x7f08005e;
+        public static final int TVLUpdateValue=0x7f08005f;
         public static final int TVLatitude=0x7f080054;
         public static final int TVLatitudevalue=0x7f080055;
         public static final int TVLongitude=0x7f080052;
@@ -1491,11 +1493,11 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f080036;
         public static final int activity_chooser_view_content=0x7f080037;
         public static final int always=0x7f08001e;
-        public static final int bSavePosition=0x7f080060;
-        public static final int bShowPosition=0x7f080061;
+        public static final int bSavePosition=0x7f080062;
+        public static final int bShowPosition=0x7f080063;
         public static final int beginning=0x7f080023;
         public static final int book_now=0x7f080010;
-        public static final int button1=0x7f080064;
+        public static final int button1=0x7f080066;
         public static final int buyButton=0x7f08000a;
         public static final int buy_now=0x7f08000f;
         public static final int buy_with_google=0x7f08000e;
@@ -1511,7 +1513,7 @@ containing a value of this type.
         public static final int expand_activities_button=0x7f080038;
         public static final int expanded_menu=0x7f08003e;
         public static final int fullscreen_content=0x7f080050;
-        public static final int fullscreen_content_controls=0x7f08005f;
+        public static final int fullscreen_content_controls=0x7f080061;
         public static final int grayscale=0x7f080012;
         public static final int holo_dark=0x7f080005;
         public static final int holo_light=0x7f080006;
@@ -1555,7 +1557,7 @@ containing a value of this type.
         public static final int strict_sandbox=0x7f080009;
         public static final int submit_area=0x7f08004b;
         public static final int tabMode=0x7f080015;
-        public static final int tableRow1=0x7f080063;
+        public static final int tableRow1=0x7f080065;
         public static final int terrain=0x7f080003;
         public static final int title=0x7f08003d;
         public static final int top_action_bar=0x7f080032;
