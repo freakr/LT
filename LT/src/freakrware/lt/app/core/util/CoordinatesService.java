@@ -1,5 +1,7 @@
 package freakrware.lt.app.core.util;
 
+import java.util.ArrayList;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -10,6 +12,8 @@ import com.google.android.gms.location.LocationServices;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -119,6 +123,31 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 				if(standard.is_Sound_active())
 				{
 					standard.Sound_vibrate();
+				}
+			}
+			String[] programmstostart = db.get_task_programms(taskids[x]);
+			PackageManager pm = standard.context.getPackageManager();
+			ArrayList<PackageInfoStruct> apps = standard.getPackages();
+			
+			
+			if(programmstostart != null)
+			{
+				for(int y = 0 ; y < programmstostart.length;y++)
+				{
+					String pname = null;
+					for(int z = 0 ; z < apps.size();z++)
+					{
+						if(apps.get(z).appname.equals(programmstostart[y]))
+							{
+								pname = apps.get(z).packageName;
+							}
+					}
+					if(pname != null)
+					{
+						Intent LaunchIntent = pm.getLaunchIntentForPackage(pname);
+						standard.context.startActivity(LaunchIntent);
+					}
+					
 				}
 			}
 		}

@@ -46,7 +46,7 @@ public interface DataBase_interface {
 		final static String[] GETTER_LOCATIONS_NAME = {DB_COL_2};
 		final static String[] GETTER_TASKS_NAME = {DB_COL_8};
 		final static String[] GETTER_LOCATIONS_DATA = {DB_COL_3,DB_COL_4,DB_COL_5,DB_COL_6};
-		final static String[] GETTER_TASKS_DATA = {DB_COL_9};
+		final static String[] GETTER_TASKS_PROGRAMMS = {DB_COL_9};
 		final static String[] GETTER_TASKS_STANDARDS = {DB_COL_12,DB_COL_13,DB_COL_14,DB_COL_15};
 		final static String[] GETTER_SETUP = {DB_COL_18};
 		

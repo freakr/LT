@@ -616,6 +616,17 @@ public class DataBase implements Interfaces{
 		return set_data();
 	}
 
+	public String[] get_task_programms(int id) {
+		set_strsql("SELECT "+DB_COL_9+" FROM "+DB_TABLE_4+" WHERE "+DB_COL_7+" = '"+id + "'");
+		
+		String[] result = get_data(GETTER_TASKS_PROGRAMMS);
+		if(result.length > 0)
+		{
+			return result;
+		}
+		return null;
+	}
+
 
 	
 

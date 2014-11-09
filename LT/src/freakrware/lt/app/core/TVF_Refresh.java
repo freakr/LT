@@ -104,7 +104,7 @@ public class TVF_Refresh implements Interfaces{
     				AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
     				adialog = new Dialog(mActivity);
     				
-    				final LinearLayout ll = new LinearLayout(mActivity);
+    				final LinearLayout ll1 = standard.newlinlayout(mActivity, LinearLayout.VERTICAL);
     				final Button bTSedit = new Button(mActivity);
     				bTSedit.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1));
     	        	bTSedit.setText("Edit Standards");
@@ -146,11 +146,10 @@ public class TVF_Refresh implements Interfaces{
 						}
     	            	
     	            });
-    	            ll.addView(bTSedit);
-    	            ll.addView(bTPedit);
-    	            ll.addView(bdelete);
-    	            
-    	            dialog.setView(ll);
+    	            ll1.addView(bTSedit);
+    	            ll1.addView(bTPedit);
+    	            ll1.addView(bdelete);
+    	            dialog.setView(ll1);
     				dialog.setMessage("What to do ?"); 
     				adialog = dialog.show();
     			}

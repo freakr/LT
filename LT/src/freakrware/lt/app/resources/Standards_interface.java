@@ -43,6 +43,7 @@ public interface Standards_interface extends Fragment_interface{
 	    public String versionName = "";
 	    public int versionCode = 0;
 	    public Drawable icon;
+		public String packageName = "";
 	}
 	
 	public class Standards{
@@ -55,7 +56,7 @@ public interface Standards_interface extends Fragment_interface{
 		public Fragment TEFP;
 		public Fragment LEF;
 		public Fragment SEF;
-		private Context context;
+		public Context context;
 		private Dialog adialog;
 		public String[] names;
 		public TextView[] views;
@@ -73,11 +74,11 @@ public interface Standards_interface extends Fragment_interface{
 		
 		private ArrayList<PackageInfoStruct> getInstalledApps(boolean getSysPackages) {
 			ArrayList<PackageInfoStruct> res = new ArrayList<PackageInfoStruct>();
-	        List<PackageInfo> packs = mActivity.getPackageManager().getInstalledPackages(0);
+	        List<PackageInfo> packs = context.getPackageManager().getInstalledPackages(0);
 	        try{
 	            app_labels = new String[packs.size()];
 	        }catch(Exception e){
-	            Toast.makeText(mActivity.getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+	            Toast.makeText(context.getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
 	        }
 	        for(int i=0;i < packs.size();i++) {
 	            PackageInfo p = packs.get(i);
@@ -89,11 +90,12 @@ public interface Standards_interface extends Fragment_interface{
 //	                continue ;
 //	            }
 	            PackageInfoStruct newInfo = new PackageInfoStruct();
-	            newInfo.appname = p.applicationInfo.loadLabel(mActivity.getPackageManager()).toString();
+	            newInfo.appname = p.applicationInfo.loadLabel(context.getPackageManager()).toString();
 	            newInfo.pname = p.packageName;
 	            newInfo.versionName = p.versionName;
 	            newInfo.versionCode = p.versionCode;
-	            newInfo.icon = p.applicationInfo.loadIcon(mActivity.getPackageManager());
+	            newInfo.icon = p.applicationInfo.loadIcon(context.getPackageManager());
+	            newInfo.packageName  = p.packageName;
 	            res.add(newInfo);
 
 	            app_labels[i] = newInfo.appname;
