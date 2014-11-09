@@ -419,7 +419,7 @@ public class DataBase implements Interfaces{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		strsql = "CREATE TABLE "+ DB_TABLE_4 +" ("+ DB_COL_7 +" INTEGER , "+ DB_COL_9 +" INTEGER, "+ DB_COL_10 +" INTEGER, "+ DB_COL_11 +" DOUBLE, "
+		strsql = "CREATE TABLE "+ DB_TABLE_4 +" ("+ DB_COL_7 +" INTEGER , "+ DB_COL_9 +" VARCHAR(255), "+ DB_COL_10 +" BIT DEFAULT FALSE NOT NULL, "
 					+ "FOREIGN KEY ("+ DB_COL_7 +") REFERENCES "+ DB_TABLE_3 +" ("+ DB_COL_7 +") on delete cascade)"; 
 		try {
 			stmt.executeUpdate(strsql);
@@ -574,6 +574,46 @@ public class DataBase implements Interfaces{
 			}
 		}
 		return locations[id];
+	}
+
+	public boolean exists_task_programms(int taskid,String progname){
+		set_strsql("SELECT "+DB_COL_7+" FROM "+DB_TABLE_4+" WHERE "+DB_COL_9+" = '"+ progname+"' AND "+DB_COL_7+" = "+ taskid);
+		
+		String[] result = get_data(GETTER_TASKPROGRAMMS_EXISTS);
+		if(result.length > 0)
+		{
+		return true;
+		}
+		return false;
+	}
+
+	public boolean get_task_programms_state(int taskid, String progname) {
+		set_strsql("SELECT "+DB_COL_10+" FROM "+DB_TABLE_4+" WHERE "+DB_COL_9+" = '"+ progname+"' AND "+DB_COL_7+" = "+ taskid);
+		
+		String[] result = get_data(GETTER_TASKPROGRAMMS_STATE);
+		
+		if(result[0].equals("1"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+
+	public boolean add_task_programms(int taskid, String name) {
+		set_strsql("INSERT INTO "+DB_TABLE_4+" ("+DB_COL_7+","+DB_COL_9+","+DB_COL_10+") VALUES ('"+ taskid +"','"+ name +"',"+true+")"); 
+		
+		return set_data();
+	}
+
+	public boolean remove_task_programms(int taskid, String name) {
+		set_strsql("DELETE FROM "+DB_TABLE_4+" WHERE "+DB_COL_9+" = '"+ name+"' AND "+DB_COL_7+" = '"+ taskid + "'"); 
+		
+		return set_data();
 	}
 
 

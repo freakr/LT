@@ -55,13 +55,39 @@ public class TEFP_Refresh implements Interfaces{
 		
 		for(int x = 0 ; x < apps.size();x++)
 		{
-			String name = apps.get(x).appname;
+			final String name = apps.get(x).appname;
 			
 			
 			final LinearLayout appblock = standard.newlinlayout(mActivity,LinearLayout.HORIZONTAL);
 			
 			final TextView appname = standard.newtextview(mActivity,name,20,Gravity.START);
 			final CheckBox appcheck = new CheckBox(mActivity);
+			if(db.exists_task_programms(db.exists_task(taskname),name))
+			{
+				appcheck.setChecked(db.get_task_programms_state(db.exists_task(taskname),name)); 
+			}
+			
+			appcheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		      
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+					if(isChecked)
+					{
+						if(!db.exists_task_programms(db.exists_task(taskname),name))
+						{
+							db.add_task_programms(db.exists_task(taskname),name);
+						}
+					}
+					else
+					{
+						if(db.exists_task_programms(db.exists_task(taskname),name))
+						{
+							db.remove_task_programms(db.exists_task(taskname),name);
+						}
+					}
+				}
+			});
+			
 			
 			appname.setLayoutParams(lparam08);
 			appblock.addView(appname);
