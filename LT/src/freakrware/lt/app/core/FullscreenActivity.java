@@ -52,6 +52,10 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		// TODO
 		db.add_setup_parameter("LAST_POS_LATI");
 		db.add_setup_parameter("LAST_POS_LONGI");
+		db.add_setup_parameter("LAST_POS_LATI_RECEIVED");
+		db.add_setup_parameter("LAST_POS_LONGI_RECEIVED");
+		db.add_setup_parameter("LAST_POS_SENDER_RECEIVED");
+		db.add_setup_parameter("LAST_POS_ACTION_TIME_RECEIVED");
 		
 //		db.add_setup_parameter("IR_DONE");
 //		if(db.exists_parameter("RANGE") == 0)

