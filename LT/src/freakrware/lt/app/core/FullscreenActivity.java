@@ -10,7 +10,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import freakrware.lt.app.core.util.SystemUiHider;
 import freakrware.lt.app.resources.Interfaces;
 
@@ -51,7 +50,9 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		super.onCreate(savedInstanceState);
 
 		// TODO
-		db.add_setup_parameter("LAST_ACTION_TIME");
+		db.add_setup_parameter("LAST_POS_LATI");
+		db.add_setup_parameter("LAST_POS_LONGI");
+		
 //		db.add_setup_parameter("IR_DONE");
 //		if(db.exists_parameter("RANGE") == 0)
 //			{

@@ -1,8 +1,6 @@
 package freakrware.lt.app.core;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
@@ -14,10 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout.LayoutParams;
-import freakrware.lt.app.core.util.DataBase;
 import freakrware.lt.app.resources.Interfaces;
 
 public class TEFP_Refresh implements Interfaces{

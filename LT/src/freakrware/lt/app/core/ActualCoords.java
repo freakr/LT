@@ -1,7 +1,6 @@
 package freakrware.lt.app.core;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -9,7 +8,6 @@ import java.util.Locale;
 import android.app.Activity;
 import android.graphics.Color;
 import android.location.Location;
-import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.widget.TextView;
 import freakrware.lt.app.core.util.Coordinates;

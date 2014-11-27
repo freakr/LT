@@ -330,8 +330,9 @@ public class DataBase implements Interfaces{
 		return execute_update();
 	}
 	
-	@SuppressWarnings("null")
+	@SuppressWarnings({ "unchecked" })
 	private String[] get_data(String[] getter){
+		@SuppressWarnings("rawtypes")
 		Vector result = new Vector();
 		execute_query();
 		try {

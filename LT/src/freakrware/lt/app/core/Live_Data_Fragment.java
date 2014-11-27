@@ -1,9 +1,6 @@
 package freakrware.lt.app.core;
 
 import java.util.Locale;
-import java.util.Set;
-
-import com.google.android.gms.maps.GoogleMap;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -227,6 +224,7 @@ public class Live_Data_Fragment extends Fragment implements Interfaces{
 					int mControlsHeight;
 					int mShortAnimTime;
 
+					@SuppressWarnings("unused")
 					@Override
 					@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 					public void onVisibilityChange(boolean visible) {

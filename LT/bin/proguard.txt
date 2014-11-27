@@ -49,15 +49,18 @@
 # view res/layout/abc_search_view.xml #generated:85
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# view AndroidManifest.xml #generated:33
+# view AndroidManifest.xml #generated:34
 -keep class freakrware.lt.app.core.FullscreenActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:47
+# view AndroidManifest.xml #generated:48
 -keep class freakrware.lt.app.core.receiver.BootUpReceiver { <init>(...); }
 
-# view AndroidManifest.xml #generated:56
+# view AndroidManifest.xml #generated:64
 -keep class freakrware.lt.app.core.receiver.CheckCoordinatesReceiver { <init>(...); }
 
-# view AndroidManifest.xml #generated:44
+# view AndroidManifest.xml #generated:58
+-keep class freakrware.lt.app.core.receiver.SmsReceiver { <init>(...); }
+
+# view AndroidManifest.xml #generated:45
 -keep class freakrware.lt.app.core.services.MyBootService { <init>(...); }
 

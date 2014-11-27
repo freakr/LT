@@ -177,6 +177,8 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 	@Override
 	public void onLocationChanged(Location location) {
 		loc = location;
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LATI"),String.valueOf(loc.getLatitude()));
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LONGI"),String.valueOf(loc.getLongitude()));
 	}
 	private void do_tasks_out_of_range(int[] taskids) {
 		for(int x = 0;x < taskids.length;x++)
