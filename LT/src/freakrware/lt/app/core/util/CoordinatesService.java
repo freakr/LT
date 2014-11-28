@@ -162,6 +162,8 @@ public class CoordinatesService implements Interfaces, ConnectionCallbacks,Locat
 	@Override
 	public void onConnected(Bundle arg0) {
 		loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LATI"),String.valueOf(loc.getLatitude()));
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LONGI"),String.valueOf(loc.getLongitude()));
 		String time = String.valueOf(new Date().getTime());
 		db.edit_setup_parameter_value(db.exists_parameter("LAST_ACTION_TIME"),time);
 		is_location_in_range();

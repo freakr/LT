@@ -50,12 +50,14 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		super.onCreate(savedInstanceState);
 
 		// TODO
-		db.add_setup_parameter("LAST_POS_LATI");
-		db.add_setup_parameter("LAST_POS_LONGI");
-		db.add_setup_parameter("LAST_POS_LATI_RECEIVED");
-		db.add_setup_parameter("LAST_POS_LONGI_RECEIVED");
-		db.add_setup_parameter("LAST_POS_SENDER_RECEIVED");
-		db.add_setup_parameter("LAST_POS_ACTION_TIME_RECEIVED");
+//		db.add_setup_parameter("LAST_POS_LATI");
+//		db.add_setup_parameter("LAST_POS_LONGI");
+//		db.add_setup_parameter("LAST_POS_LATI_RECEIVED");
+//		db.add_setup_parameter("LAST_POS_LONGI_RECEIVED");
+//		db.add_setup_parameter("LAST_POS_SENDER_RECEIVED");
+//		db.add_setup_parameter("LAST_POS_ACTION_TIME_RECEIVED");
+		
+
 		
 //		db.add_setup_parameter("IR_DONE");
 //		if(db.exists_parameter("RANGE") == 0)
@@ -73,6 +75,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 		standard.set_Activity(mActivity);
 		standard.set_Context(mActivity.getBaseContext());
 		standard.ini_Ccoords();
+//		standard.send_sms("01708058178", "LT-MESSAGE-SEND-POSITION");
 		
 
         // Instantiate a ViewPager and a PagerAdapter.

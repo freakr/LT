@@ -37,14 +37,14 @@ public class SmsReceiver extends BroadcastReceiver implements Interfaces{
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                 if(message.contains("LT-MESSAGE-SEND-POSITION"))
                 {
-//                	abortBroadcast();
+                	abortBroadcast();
                 	String position = aso.sms_send_Position();
                 	String pos = "LT-MESSAGE-RECEIVE-POSITION;"  + position;
                 	standard.send_sms(sender,pos);
                 }
                 if(message.contains("LT-MESSAGE-RECEIVE-POSITION"))
                 {
-//                	abortBroadcast();
+                	abortBroadcast();
                 	String[] subs = message.split(";");
                 	aso.sms_Position_received(sender, subs);
                 }

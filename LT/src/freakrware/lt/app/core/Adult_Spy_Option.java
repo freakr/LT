@@ -15,9 +15,9 @@ public class Adult_Spy_Option implements Interfaces{
 	
 	public void sms_Position_received(String sender,String[] subs){
 		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_SENDER_RECEIVED"), sender);
-		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LATI_RECEIVED"), subs[0]);
-		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LONGI_RECEIVED"), subs[1]);
-		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_ACTION_TIME_RECEIVED"), subs[2]);
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LATI_RECEIVED"), subs[1]);
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_LONGI_RECEIVED"), subs[2]);
+		db.edit_setup_parameter_value(db.exists_parameter("LAST_POS_ACTION_TIME_RECEIVED"), subs[3]);
 	}
 
 	public String sms_send_Position() {
@@ -28,6 +28,10 @@ public class Adult_Spy_Option implements Interfaces{
 		position = lati + ";"+longi + ";"+lat;
 		
 		return position;
+	}
+	public void sms_get_Position(String phoneNr)
+	{
+		standard.send_sms(phoneNr, "LT-MESSAGE-SEND-POSITION");
 	}
 
 }
