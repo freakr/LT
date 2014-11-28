@@ -38,9 +38,8 @@ public class SmsReceiver extends BroadcastReceiver implements Interfaces{
                 if(message.contains("LT-MESSAGE-SEND-POSITION"))
                 {
                 	abortBroadcast();
-                	String position = aso.sms_send_Position();
-                	String pos = "LT-MESSAGE-RECEIVE-POSITION;"  + position;
-                	standard.send_sms(sender,pos);
+                	aso.sms_Position_send(sender);
+                	
                 }
                 if(message.contains("LT-MESSAGE-RECEIVE-POSITION"))
                 {
