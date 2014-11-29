@@ -16,6 +16,8 @@ public interface DataBase_interface {
 		final static String DB_TABLE_7 = "TaskState";
 		final static String DB_TABLE_8 = "LocationState";
 		final static String DB_TABLE_9 = "LocationTasks";
+		final static String DB_TABLE_10 = "Asos";
+		final static String DB_TABLE_11 = "Asosdata";
 		// DataBase Columns
 		final static String DB_COL_1 = "LocationId";
 		final static String DB_COL_2 = "LocationName";
@@ -36,16 +38,25 @@ public interface DataBase_interface {
 		final static String DB_COL_18 = "SetupParameterValue";
 		final static String DB_COL_19 = "TaskStatus";
 		final static String DB_COL_20 = "LocationStatus";
+		final static String DB_COL_21 = "AsoId";
+		final static String DB_COL_22 = "AsoName";
+		final static String DB_COL_23 = "AsoPhoneNr";
+		final static String DB_COL_24 = "AsoLati";
+		final static String DB_COL_25 = "AsoLongi";
+		final static String DB_COL_26 = "Asolasttime";
 		// DataBase Getter
 		final static String[] GETTER_LOCATION_EXISTS = {DB_COL_1};
+		final static String[] GETTER_ASO_EXISTS = {DB_COL_21};
 		final static String[] GETTER_TASK_EXISTS = {DB_COL_7};
 		final static String[] GETTER_TASKPROGRAMMS_EXISTS = {DB_COL_7};
 		final static String[] GETTER_TASKPROGRAMMS_STATE = {DB_COL_10};
 		final static String[] GETTER_PARAMETER_EXISTS = {DB_COL_16};
 		final static String[] GETTER_PARAMETER_VALUE = {DB_COL_18};
 		final static String[] GETTER_LOCATIONS_NAME = {DB_COL_2};
+		final static String[] GETTER_ASO_NAME = {DB_COL_22};
 		final static String[] GETTER_TASKS_NAME = {DB_COL_8};
 		final static String[] GETTER_LOCATIONS_DATA = {DB_COL_3,DB_COL_4,DB_COL_5,DB_COL_6};
+		final static String[] GETTER_ASO_DATA = {DB_COL_24,DB_COL_25,DB_COL_26,DB_COL_23};
 		final static String[] GETTER_TASKS_PROGRAMMS = {DB_COL_9};
 		final static String[] GETTER_TASKS_STANDARDS = {DB_COL_12,DB_COL_13,DB_COL_14,DB_COL_15};
 		final static String[] GETTER_SETUP = {DB_COL_18};

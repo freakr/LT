@@ -31,6 +31,8 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 	private static final int SETUP = 1;
 
 	private static final int MENU_QUIT = 2;
+	
+	private static final int ASO = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -48,35 +50,18 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// TODO
 //		db.add_setup_parameter("LAST_POS_LATI");
-//		db.add_setup_parameter("LAST_POS_LONGI");
-//		db.add_setup_parameter("LAST_POS_LATI_RECEIVED");
-//		db.add_setup_parameter("LAST_POS_LONGI_RECEIVED");
-//		db.add_setup_parameter("LAST_POS_SENDER_RECEIVED");
-//		db.add_setup_parameter("LAST_POS_ACTION_TIME_RECEIVED");
+//		String strsql = "CREATE TABLE "+ DB_TABLE_11 +" ("+ DB_COL_21 +" INTEGER , "+ DB_COL_24 +" DOUBLE, "+ DB_COL_25 +" DOUBLE, "+ DB_COL_26 +" DOUBLE, "+ DB_COL_23 +" VARCHAR(255), "
+//				+ "FOREIGN KEY ("+ DB_COL_21 +") REFERENCES "+ DB_TABLE_10 +" ("+ DB_COL_21 +") on delete cascade)"; 
+//		db.edit_database(strsql);
 		
-
 		
-//		db.add_setup_parameter("IR_DONE");
-//		if(db.exists_parameter("RANGE") == 0)
-//			{
-//			db.add_setup_parameter("RANGE");
-//			db.edit_setup_parameter_value(db.exists_parameter("RANGE"),String.valueOf(100));
-//			}
-//		db.edit_setup_parameter_value(db.exists_parameter("IR_DONE"),String.valueOf(false));
-//		db.edit_setup_parameter_value(db.exists_parameter("OOR_DONE"),String.valueOf(false));
-		// TODO
-	
 		
 		setContentView(R.layout.activity_fullscreen);
 		mActivity=this;
 		standard.set_Activity(mActivity);
 		standard.set_Context(mActivity.getBaseContext());
 		standard.ini_Ccoords();
-//		standard.send_sms("01708058178", "LT-MESSAGE-SEND-POSITION");
-		
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.ViewPager);
@@ -88,6 +73,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 	
 	/* Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
+	menu.add(0, ASO, 0, "ASO");
 	menu.add(0, SETUP, 0, "Setup");
 	menu.add(0, MENU_QUIT, 0, "Quit");
 	return true;
@@ -100,6 +86,12 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 				if(mFragmentList.get(mPager.getCurrentItem()) != standard.SEF)
 				{
 					standard.fragmentswitch_to_new(mPager.getCurrentItem(), SEFFRAGMENT, "Setup");
+				}
+				return true;
+			case ASO:
+				if(mFragmentList.get(mPager.getCurrentItem()) != standard.ASO)
+				{
+					standard.fragmentswitch_to_new(mPager.getCurrentItem(), ASOFRAGMENT, "ASO");
 				}
 				return true;
 			case MENU_QUIT:

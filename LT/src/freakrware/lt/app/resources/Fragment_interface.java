@@ -17,5 +17,6 @@ public interface Fragment_interface {
 	public static final String TEFPFRAGMENT = "TEFP";
 	public static final String LEFFRAGMENT = "LEF";
 	public static final String SEFFRAGMENT = "SEF";
+	public static final String ASOFRAGMENT = "ASO";
 
 }
