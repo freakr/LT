@@ -14,14 +14,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -106,6 +111,35 @@ public interface Standards_interface extends Fragment_interface {
 			return res;
 		}
 
+		public void shareWhatsApp(Activity appActivity, String texto) {
+			Uri uri = Uri.parse("smsto:" + "01708058178");
+		    Intent sendIntent = new Intent(Intent.ACTION_SENDTO,uri);     
+		    sendIntent.setType("text/plain");
+		    sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, texto);
+
+		    PackageManager pm = appActivity.getApplicationContext().getPackageManager();
+		    final List<ResolveInfo> matches = pm.queryIntentActivities(sendIntent, 0);
+		    boolean temWhatsApp = false;
+		    for (final ResolveInfo info : matches) {
+		      if (info.activityInfo.packageName.startsWith("com.whatsapp"))  {
+		          final ComponentName name = new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name);
+		          sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		          sendIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_TASK);
+		          sendIntent.setComponent(name);
+		          temWhatsApp = true;
+		          break;
+		      }
+		    }               
+
+		    if(temWhatsApp) {
+		        //abre whatsapp
+		        appActivity.startActivity(sendIntent);
+		    } else {
+		        //alerta - você deve ter o whatsapp instalado
+//		        Toast.makeText(appActivity, appActivity.getString(R.string.share_whatsapp), Toast.LENGTH_SHORT).show();
+		    }
+		}
+		
 		public void send_sms(String phoneNo, String sms) {
 
 			try {

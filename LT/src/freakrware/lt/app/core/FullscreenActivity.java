@@ -1,6 +1,8 @@
 package freakrware.lt.app.core;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import freakrware.lt.app.core.util.SystemUiHider;
 import freakrware.lt.app.resources.Interfaces;
 
@@ -55,14 +58,14 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 //				+ "FOREIGN KEY ("+ DB_COL_21 +") REFERENCES "+ DB_TABLE_10 +" ("+ DB_COL_21 +") on delete cascade)"; 
 //		db.edit_database(strsql);
 		
-		
-		
 		setContentView(R.layout.activity_fullscreen);
 		mActivity=this;
 		standard.set_Activity(mActivity);
 		standard.set_Context(mActivity.getBaseContext());
 		standard.ini_Ccoords();
-
+		
+//		standard.shareWhatsApp(mActivity,"01708058178");
+		
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.ViewPager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -103,7 +106,7 @@ public class FullscreenActivity extends FragmentActivity implements Interfaces{
 
     @Override
     public void onBackPressed() {
-    	if(mFragmentList.get(mPager.getCurrentItem()) == standard.SEF)
+    	if(mFragmentList.get(mPager.getCurrentItem()) == standard.SEF || mFragmentList.get(mPager.getCurrentItem()) == standard.ASO)
     	{
     		standard.fragmentswitch(0, LDF);
     		standard.fragmentswitch(1, LVF);
